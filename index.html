@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stronghold Kingdoms - Companion Dashboard</title>
+    <title>Stronghold Kingdoms — Companion Dashboard</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -11,9 +11,8 @@
             background: #0a0e14;
             color: #c8c8c8;
             min-height: 100vh;
+            overflow-x: hidden;
         }
-
-        /* Nav */
         nav {
             background: #141b24;
             padding: 12px 40px;
@@ -21,302 +20,794 @@
             align-items: center;
             justify-content: space-between;
             border-bottom: 1px solid #2a3a4a;
+            flex-wrap: wrap;
+            gap: 10px;
         }
-        .logo {
-            font-size: 22px;
-            font-weight: 800;
-            color: #e6b800;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
+        .logo { font-size: 22px; font-weight: 800; color: #e6b800; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; }
         .logo span { color: #c8c8c8; font-weight: 300; }
-        .nav-links { display: flex; gap: 30px; }
-        .nav-links a { color: #8a9ba8; text-decoration: none; font-size: 14px; font-weight: 500; }
-        .nav-links a:hover { color: #e6b800; }
-        .user-badge {
-            display: flex; align-items: center; gap: 10px;
-            background: #1e2833; padding: 8px 16px; border-radius: 8px;
-        }
-        .user-badge img { width: 28px; height: 28px; border-radius: 50%; background: #2a3a4a; }
-        .user-badge .name { font-size: 13px; color: #e0e0e0; }
-        .user-badge .crown { color: #e6b800; font-size: 12px; }
-
-        /* Main Layout */
+        .nav-links { display: flex; gap: 20px; flex-wrap: wrap; }
+        .nav-links a { color: #8a9ba8; text-decoration: none; font-size: 14px; font-weight: 500; cursor: pointer; padding: 4px 8px; border-radius: 6px; }
+        .nav-links a:hover, .nav-links a.active { color: #e6b800; background: #1e2833; }
+        .user-badge { display: flex; align-items: center; gap: 10px; background: #1e2833; padding: 8px 16px; border-radius: 8px; cursor: pointer; }
+        .user-badge:hover { background: #2a3a4a; }
         .container { display: flex; max-width: 1400px; margin: 0 auto; padding: 20px; gap: 20px; }
-
-        /* Sidebar */
         .sidebar {
-            width: 260px; flex-shrink: 0;
-            background: #141b24; border-radius: 12px; padding: 20px;
-            height: fit-content;
+            width: 220px; flex-shrink: 0;
+            background: #141b24; border-radius: 12px; padding: 16px;
+            height: fit-content; position: sticky; top: 20px;
         }
-        .sidebar h3 { color: #e6b800; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+        .sidebar h3 { color: #e6b800; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; margin-top: 16px; }
+        .sidebar h3:first-child { margin-top: 0; }
         .sidebar-item {
-            display: flex; align-items: center; gap: 12px;
-            padding: 10px 12px; border-radius: 8px; cursor: pointer;
-            margin-bottom: 4px; font-size: 14px;
+            display: flex; align-items: center; gap: 10px;
+            padding: 8px 10px; border-radius: 6px; cursor: pointer;
+            margin-bottom: 2px; font-size: 13px; transition: 0.15s;
         }
         .sidebar-item:hover, .sidebar-item.active { background: #1e2833; color: #e6b800; }
-        .sidebar-item .icon { width: 20px; text-align: center; }
-        .sidebar-item .count {
-            margin-left: auto; background: #2a3a4a; padding: 2px 8px;
-            border-radius: 10px; font-size: 11px; color: #8a9ba8;
-        }
-        .sidebar-item:hover .count { background: #3a4a5a; }
-
-        /* Main Content */
+        .sidebar-item .count { margin-left: auto; background: #2a3a4a; padding: 1px 7px; border-radius: 10px; font-size: 11px; color: #8a9ba8; }
         .content { flex: 1; }
+        .page { display: none; }
+        .page.active { display: block; }
 
-        /* Kingdom Stats */
+        /* Stats */
         .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 20px; }
-        .stat-card {
-            background: #141b24; border-radius: 12px; padding: 18px;
-            border-left: 3px solid #e6b800;
-        }
+        .stat-card { background: #141b24; border-radius: 12px; padding: 18px; border-left: 3px solid #e6b800; }
         .stat-card .label { font-size: 11px; text-transform: uppercase; color: #6a7a8a; letter-spacing: 0.5px; }
         .stat-card .value { font-size: 26px; font-weight: 700; color: #f0f0f0; margin-top: 4px; }
         .stat-card .sub { font-size: 12px; color: #6a7a8a; margin-top: 2px; }
+        .stat-card.clickable { cursor: pointer; transition: 0.2s; }
+        .stat-card.clickable:hover { transform: translateY(-2px); border-left-color: #ffd700; }
 
-        /* Section Title */
-        .section-title {
-            display: flex; justify-content: space-between; align-items: center;
-            margin: 24px 0 14px;
-        }
+        .section-title { display: flex; justify-content: space-between; align-items: center; margin: 20px 0 12px; }
         .section-title h2 { font-size: 18px; color: #f0f0f0; }
-        .section-title a { color: #e6b800; font-size: 13px; text-decoration: none; }
+        .section-title a { color: #e6b800; font-size: 13px; text-decoration: none; cursor: pointer; }
 
-        /* Estate Cards */
+        /* Cards */
         .village-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
         .village-card {
-            background: #141b24; border-radius: 12px; overflow: hidden;
-            transition: transform 0.2s;
+            background: #141b24; border-radius: 12px; overflow: hidden; cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
-        .village-card:hover { transform: translateY(-2px); }
-        .village-card .preview {
-            height: 100px; background: linear-gradient(135deg, #1a2a3a, #2a4a3a);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 36px;
-        }
-        .village-card .info { padding: 14px; }
-        .village-card .info h4 { color: #f0f0f0; font-size: 15px; }
-        .village-card .info p { color: #6a7a8a; font-size: 12px; margin-top: 4px; }
-        .village-card .info .resources { display: flex; gap: 12px; margin-top: 8px; font-size: 12px; color: #8a9ba8; }
-        .village-card .info .resources span { display: flex; align-items: center; gap: 4px; }
+        .village-card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.4); }
+        .village-card .preview { height: 80px; display: flex; align-items: center; justify-content: center; font-size: 32px; }
+        .village-card .info { padding: 12px; }
+        .village-card .info h4 { color: #f0f0f0; font-size: 14px; }
+        .village-card .info p { color: #6a7a8a; font-size: 11px; margin-top: 2px; }
+        .village-card .info .resources { display: flex; gap: 10px; margin-top: 6px; font-size: 11px; color: #8a9ba8; }
 
-        /* Activity Feed */
-        .activity-list { background: #141b24; border-radius: 12px; padding: 16px; }
-        .activity-item {
-            display: flex; align-items: center; gap: 12px;
-            padding: 10px 0; border-bottom: 1px solid #1e2833;
-        }
+        .activity-list { background: #141b24; border-radius: 12px; padding: 12px 16px; max-height: 300px; overflow-y: auto; }
+        .activity-item { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid #1e2833; font-size: 13px; }
         .activity-item:last-child { border-bottom: none; }
-        .activity-item .time { color: #6a7a8a; font-size: 12px; width: 60px; }
-        .activity-item .event { font-size: 13px; }
-        .activity-item .event strong { color: #e0e0e0; }
-        .activity-item .event .highlight { color: #e6b800; }
 
-        /* Footer */
-        footer {
-            text-align: center; padding: 30px;
-            color: #4a5a6a; font-size: 13px; border-top: 1px solid #141b24; margin-top: 40px;
+        /* Buttons */
+        .btn {
+            padding: 8px 18px; border: none; border-radius: 8px; cursor: pointer;
+            font-size: 13px; font-weight: 600; transition: 0.2s;
         }
-        footer a { color: #6a7a8a; margin: 0 10px; text-decoration: none; }
+        .btn-primary { background: #e6b800; color: #0a0e14; }
+        .btn-primary:hover { background: #ffd700; transform: scale(1.02); }
+        .btn-secondary { background: #2a3a4a; color: #c8c8c8; }
+        .btn-secondary:hover { background: #3a4a5a; }
+        .btn-danger { background: #8a2a2a; color: #fff; }
+        .btn-danger:hover { background: #aa3a3a; }
+        .btn-sm { padding: 5px 12px; font-size: 11px; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
 
-        /* Responsive */
-        @media (max-width: 1024px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } .village-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 768px) { .sidebar { display: none; } .stats-grid { grid-template-columns: 1fr; } .village-grid { grid-template-columns: 1fr; } }
+        /* World Map */
+        .map-grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 3px; max-width: 500px; margin: 0 auto; }
+        .map-tile {
+            aspect-ratio: 1; border-radius: 3px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 14px; transition: 0.15s; position: relative;
+        }
+        .map-tile:hover { transform: scale(1.15); z-index: 2; }
+        .map-tile.owned { box-shadow: 0 0 0 1px #e6b800; }
+        .map-tile.enemy { box-shadow: 0 0 0 1px #cc3333; }
+
+        /* Buildings */
+        .build-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+        .build-card {
+            background: #141b24; border-radius: 12px; padding: 16px; text-align: center;
+            cursor: pointer; transition: 0.2s;
+        }
+        .build-card:hover { background: #1e2833; transform: translateY(-2px); }
+        .build-card .icon { font-size: 32px; margin-bottom: 6px; }
+        .build-card h4 { color: #f0f0f0; font-size: 14px; }
+        .build-card .cost { color: #6a7a8a; font-size: 11px; margin-top: 4px; }
+        .build-card .level { color: #e6b800; font-size: 12px; margin-top: 4px; }
+
+        /* Army */
+        .army-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+        .unit-card {
+            background: #141b24; border-radius: 12px; padding: 16px; text-align: center;
+            cursor: pointer; transition: 0.2s;
+        }
+        .unit-card:hover { background: #1e2833; }
+        .unit-card .icon { font-size: 28px; }
+        .unit-card .count { font-size: 22px; font-weight: 700; color: #f0f0f0; }
+        .unit-card .name { font-size: 12px; color: #8a9ba8; }
+
+        /* Modal */
+        .modal-overlay {
+            display: none; position: fixed; inset: 0;
+            background: rgba(0,0,0,0.7); z-index: 100;
+            align-items: center; justify-content: center;
+        }
+        .modal-overlay.show { display: flex; }
+        .modal {
+            background: #1a2430; border-radius: 16px; padding: 28px;
+            max-width: 500px; width: 90%; border: 1px solid #2a3a4a;
+            max-height: 80vh; overflow-y: auto;
+        }
+        .modal h2 { color: #f0f0f0; margin-bottom: 12px; }
+        .modal p { color: #8a9ba8; font-size: 14px; line-height: 1.5; }
+        .modal .btn { margin-top: 16px; }
+        .modal-close { float: right; background: none; border: none; color: #6a7a8a; font-size: 24px; cursor: pointer; }
+        .modal-close:hover { color: #f0f0f0; }
+
+        /* Battle */
+        .battle-log {
+            background: #0a0e14; border-radius: 8px; padding: 12px;
+            max-height: 200px; overflow-y: auto; font-family: monospace; font-size: 12px; margin-top: 12px;
+        }
+        .battle-log .win { color: #4caf50; }
+        .battle-log .lose { color: #f44336; }
+        .battle-log .info { color: #8a9ba8; }
+
+        .toast {
+            position: fixed; bottom: 20px; right: 20px;
+            background: #1a2430; border: 1px solid #2a3a4a;
+            padding: 14px 20px; border-radius: 10px;
+            color: #f0f0f0; font-size: 13px;
+            transform: translateY(100px); opacity: 0;
+            transition: 0.3s; z-index: 200;
+        }
+        .toast.show { transform: translateY(0); opacity: 1; }
+
+        @media (max-width: 1024px) {
+            .container { flex-direction: column; }
+            .sidebar { width: 100%; position: static; display: flex; flex-wrap: wrap; gap: 8px; }
+            .sidebar h3 { width: 100%; margin-top: 0; }
+            .sidebar-item { flex: 1; min-width: 80px; justify-content: center; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .village-grid { grid-template-columns: repeat(2, 1fr); }
+            .build-grid { grid-template-columns: repeat(2, 1fr); }
+            .army-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 600px) {
+            nav { padding: 12px 16px; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .village-grid, .build-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0a0e14; }
+        ::-webkit-scrollbar-thumb { background: #2a3a4a; border-radius: 3px; }
+
+        /* Research tree */
+        .tech-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        .tech-card {
+            background: #141b24; border-radius: 10px; padding: 14px;
+            cursor: pointer; transition: 0.2s;
+        }
+        .tech-card:hover { background: #1e2833; }
+        .tech-card .name { color: #f0f0f0; font-size: 13px; }
+        .tech-card .desc { color: #6a7a8a; font-size: 11px; }
+        .tech-card .progress { margin-top: 8px; height: 4px; background: #2a3a4a; border-radius: 2px; overflow: hidden; }
+        .tech-card .progress .bar { height: 100%; background: #e6b800; border-radius: 2px; transition: width 0.5s; }
     </style>
 </head>
 <body>
     <nav>
-        <div class="logo">Stronghold <span>Kingdoms</span></div>
+        <div class="logo" onclick="switchPage('dashboard')">Stronghold <span>Kingdoms</span></div>
         <div class="nav-links">
-            <a href="#">Dashboard</a>
-            <a href="#">Map</a>
-            <a href="#">Military</a>
-            <a href="#">Diplomacy</a>
-            <a href="#">Market</a>
-            <a href="#">Leaderboards</a>
+            <a class="active" onclick="switchPage('dashboard')">Dashboard</a>
+            <a onclick="switchPage('map')">Map</a>
+            <a onclick="switchPage('military')">Military</a>
+            <a onclick="switchPage('buildings')">Buildings</a>
+            <a onclick="switchPage('research')">Research</a>
         </div>
-        <div class="user-badge">
-            <div class="name">Lord_obvirm</div>
-            <div class="crown">👑</div>
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Ccircle cx='14' cy='14' r='14' fill='%232a3a4a'/%3E%3Ctext x='14' y='18' text-anchor='middle' fill='%23e6b800' font-size='14' font-weight='bold'%3ESK%3C/text%3E%3C/svg%3E" alt="avatar">
+        <div class="user-badge" onclick="showModal('lord')">
+            <div>Lord_obvirm 👑</div>
         </div>
     </nav>
 
     <div class="container">
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <h3>My Kingdom</h3>
-            <div class="sidebar-item active"><span class="icon">🏰</span> Overview <span class="count">3</span></div>
-            <div class="sidebar-item"><span class="icon">🏘️</span> Estates <span class="count">7</span></div>
-            <div class="sidebar-item"><span class="icon">⚔️</span> Army <span class="count">4</span></div>
-            <div class="sidebar-item"><span class="icon">📜</span> Research</div>
-            <div class="sidebar-item"><span class="icon">🤝</span> Faction <span class="count">1</span></div>
-            <div class="sidebar-item"><span class="icon">📊</span> Rankings</div>
+        <!-- SIDEBAR -->
+        <div class="sidebar" id="sidebar">
+            <h3>🏰 My Kingdom</h3>
+            <div class="sidebar-item active" data-page="dashboard" onclick="switchPage('dashboard')"><span>📊</span> Overview</div>
+            <div class="sidebar-item" data-page="buildings" onclick="switchPage('buildings')"><span>🏘️</span> Estates <span class="count" id="estateCount">3</span></div>
+            <div class="sidebar-item" data-page="military" onclick="switchPage('military')"><span>⚔️</span> Army <span class="count" id="armyCount">0</span></div>
+            <div class="sidebar-item" data-page="research" onclick="switchPage('research')"><span>📜</span> Research</div>
+            <div class="sidebar-item" onclick="showModal('faction')"><span>🤝</span> Faction</div>
+            <div class="sidebar-item" onclick="showModal('rankings')"><span>📊</span> Rankings</div>
 
-            <h3 style="margin-top: 24px;">World</h3>
-            <div class="sidebar-item"><span class="icon">🗺️</span> World Map</div>
-            <div class="sidebar-item"><span class="icon">🏆</span> Tournaments</div>
-            <div class="sidebar-item"><span class="icon">📰</span> News</div>
+            <h3>🌍 World</h3>
+            <div class="sidebar-item" data-page="map" onclick="switchPage('map')"><span>🗺️</span> World Map</div>
+            <div class="sidebar-item" onclick="showModal('tournament')"><span>🏆</span> Tournaments</div>
+            <div class="sidebar-item" onclick="showModal('news')"><span>📰</span> News</div>
         </div>
 
-        <!-- Main -->
+        <!-- MAIN CONTENT -->
         <div class="content">
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="label">Population</div>
-                    <div class="value">12,847</div>
-                    <div class="sub">+320 / day</div>
+
+            <!-- DASHBOARD -->
+            <div class="page active" id="page-dashboard">
+                <div class="stats-grid">
+                    <div class="stat-card clickable" onclick="showModal('population')">
+                        <div class="label">👥 Population</div>
+                        <div class="value" id="statPopulation">0</div>
+                        <div class="sub" id="statPopGrowth">+0 / day</div>
+                    </div>
+                    <div class="stat-card clickable" onclick="showModal('gold')">
+                        <div class="label">💰 Gold</div>
+                        <div class="value" id="statGold">0</div>
+                        <div class="sub" id="statGoldIncome">+0 / day</div>
+                    </div>
+                    <div class="stat-card clickable" onclick="showModal('military')">
+                        <div class="label">⚔️ Military</div>
+                        <div class="value" id="statMilitary">0</div>
+                        <div class="sub" id="statArmyDetail">0 troops</div>
+                    </div>
+                    <div class="stat-card clickable" onclick="showModal('honor')">
+                        <div class="label">👑 Honor</div>
+                        <div class="value" id="statHonor">0</div>
+                        <div class="sub" id="statRank">Peasant</div>
+                    </div>
                 </div>
-                <div class="stat-card">
-                    <div class="label">Gold</div>
-                    <div class="value">48.2k</div>
-                    <div class="sub">+1.4k / day</div>
-                </div>
-                <div class="stat-card">
-                    <div class="label">Military</div>
-                    <div class="value">1,240</div>
-                    <div class="sub">12 knights · 840 swordsmen</div>
-                </div>
-                <div class="stat-card">
-                    <div class="label">Honor</div>
-                    <div class="value">3,752</div>
-                    <div class="sub">Rank: Baron</div>
+
+                <div class="section-title"><h2>🏘️ My Estates</h2><a onclick="switchPage('buildings')">Manage →</a></div>
+                <div class="village-grid" id="villageGrid"></div>
+
+                <div class="section-title" style="margin-top:20px;"><h2>📜 Recent Activity</h2><a onclick="document.getElementById('activityList').innerHTML = ''">Clear</a></div>
+                <div class="activity-list" id="activityList">
+                    <div class="activity-item"><span>🏰</span> Welcome to Stronghold Kingdoms! Begin building your empire.</div>
                 </div>
             </div>
 
-            <div class="section-title">
-                <h2>My Estates</h2>
-                <a href="#">Manage →</a>
+            <!-- MAP -->
+            <div class="page" id="page-map">
+                <div class="section-title"><h2>🗺️ World Map — Kingmaker 4</h2><a onclick="claimRandomTile()">Find Territory</a></div>
+                <div style="background:#141b24; border-radius:12px; padding:20px; text-align:center;">
+                    <div class="map-grid" id="worldMap"></div>
+                    <p style="color:#6a7a8a; margin-top:12px; font-size:13px;">
+                        🟩 Yours: <span id="ownedTiles">0</span> &nbsp;·&nbsp;
+                        🟥 Enemy: <span id="enemyTiles">0</span> &nbsp;·&nbsp;
+                        ⬛ Unclaimed: <span id="unclaimedTiles">0</span>
+                    </p>
+                    <button class="btn btn-primary" onclick="claimRandomTile()" style="margin-top:8px;">⚔️ Claim New Territory</button>
+                </div>
+                <div class="section-title" style="margin-top:20px;"><h2>⚔️ Recent Battles</h2></div>
+                <div class="activity-list" id="battleList"><div class="activity-item"><span>📋</span> No battles yet. Claim territory to start!</div></div>
             </div>
-            <div class="village-grid">
-                <div class="village-card">
-                    <div class="preview">🏰</div>
-                    <div class="info">
-                        <h4>Avalon Keep</h4>
-                        <p>Capital · Level 18</p>
-                        <div class="resources">
-                            <span>🪵 2.4k</span>
-                            <span>🪨 1.8k</span>
-                            <span>🌾 3.1k</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="village-card">
-                    <div class="preview">🏘️</div>
-                    <div class="info">
-                        <h4>Northwood Village</h4>
-                        <p>Farming · Level 12</p>
-                        <div class="resources">
-                            <span>🪵 1.2k</span>
-                            <span>🪨 800</span>
-                            <span>🌾 4.2k</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="village-card">
-                    <div class="preview">⚔️</div>
-                    <div class="info">
-                        <h4>Iron Garrison</h4>
-                        <p>Military · Level 9</p>
-                        <div class="resources">
-                            <span>🪵 600</span>
-                            <span>🪨 1.4k</span>
-                            <span>⚔️ 580 troops</span>
-                        </div>
-                    </div>
+
+            <!-- MILITARY -->
+            <div class="page" id="page-military">
+                <div class="section-title"><h2>⚔️ My Army</h2><a onclick="autoRecruit()">Auto-Recruit</a></div>
+                <div class="army-grid" id="armyGrid"></div>
+                <div class="section-title" style="margin-top:20px;"><h2>🎯 Attack</h2><a onclick="autoBattle()">Auto-Attack Nearest</a></div>
+                <div style="background:#141b24; border-radius:12px; padding:16px;">
+                    <p style="color:#8a9ba8; font-size:13px;">Select an enemy tile on the map, or click Auto-Attack to engage the nearest enemy territory.</p>
+                    <div class="battle-log" id="battleLog"><div class="info">⚔️ Ready for battle!</div></div>
+                    <button class="btn btn-danger" onclick="autoBattle()" style="margin-top:8px;">⚔️ Attack!</button>
                 </div>
             </div>
 
-            <div class="section-title">
-                <h2>Recent Activity</h2>
-                <a href="#">All logs →</a>
-            </div>
-            <div class="activity-list">
-                <div class="activity-item">
-                    <span class="time">12:34</span>
-                    <span class="event"><strong>Iron Garrison</strong> — <span class="highlight">Barracks upgraded</span> to Level 6</span>
-                </div>
-                <div class="activity-item">
-                    <span class="time">11:15</span>
-                    <span class="event"><strong>Lord_obvirm</strong> — <span class="highlight">Trade route established</span> with House Stark</span>
-                </div>
-                <div class="activity-item">
-                    <span class="time">09:47</span>
-                    <span class="event"><strong>Avalon Keep</strong> — <span class="highlight">Scout reports</span> enemy activity at coordinates (24, 18)</span>
-                </div>
-                <div class="activity-item">
-                    <span class="time">08:02</span>
-                    <span class="event"><strong>Northwood Village</strong> — <span class="highlight">Harvest completed</span> — 2,400 food stockpiled</span>
-                </div>
-                <div class="activity-item">
-                    <span class="time">06:30</span>
-                    <span class="event"><strong>Tax collection</strong> — <span class="highlight">3,200 gold</span> added to treasury</span>
-                </div>
+            <!-- BUILDINGS -->
+            <div class="page" id="page-buildings">
+                <div class="section-title"><h2>🏗️ Construct / Upgrade</h2><a onclick="addLog('📖 Opened the building blueprint library')">Blueprints</a></div>
+                <div class="build-grid" id="buildGrid"></div>
             </div>
 
-            <div class="section-title" style="margin-top: 30px;">
-                <h2>Active World Map — Kingmaker 4</h2>
-                <a href="#">Full map →</a>
-            </div>
-            <div style="background: #141b24; border-radius: 12px; padding: 20px; text-align: center;">
-                <div style="display: grid; grid-template-columns: repeat(10, 1fr); gap: 4px; max-width: 600px; margin: 0 auto;">
-                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
-                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
-                    <span style="background:#2a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟨</span>
-                    <span style="background:#2a1a1a; padding:8px; border-radius:4px; font-size:10px;">🟥</span>
-                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
-                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
-                    <span style="background:#2a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟨</span>
-                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
-                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
-                    <span style="background:#2a1a1a; padding:8px; border-radius:4px; font-size:10px;">🟥</span>
-                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
-                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
-                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
-                    <span style="background:#2a1a1a; padding:8px; border-radius:4px; font-size:10px;">🟥</span>
-                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
-                    <span style="background:#2a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟨</span>
-                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
-                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
-                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
-                    <span style="background:#2a1a1a; padding:8px; border-radius:4px; font-size:10px;">🟥</span>
-                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
-                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
-                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
-                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
-                    <span style="background:#2a1a1a; padding:8px; border-radius:4px; font-size:10px;">🟥</span>
-                    <span style="background:#2a1a1a; padding:8px; border-radius:4px; font-size:10px;">🟥</span>
-                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
-                    <span style="background:#2a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟨</span>
-                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
-                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
-                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
-                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
-                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
-                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
-                    <span style="background:#2a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟨</span>
-                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
-                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
-                    <span style="background:#2a1a1a; padding:8px; border-radius:4px; font-size:10px;">🟥</span>
-                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
-                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
-                </div>
-                <p style="color: #6a7a8a; margin-top: 14px; font-size: 13px;">📌 3 active sieges · 12 alliance members online · 2 pending attacks</p>
+            <!-- RESEARCH -->
+            <div class="page" id="page-research">
+                <div class="section-title"><h2>📜 Research Technology</h2><a onclick="addLog('🔬 Research project initiated')">Auto-Research</a></div>
+                <div class="tech-grid" id="techGrid"></div>
             </div>
         </div>
     </div>
 
-    <footer>
-        <p>Stronghold Kingdoms is © Firefly Studios. This companion dashboard is not affiliated with Firefly Studios.</p>
-        <p style="margin-top: 8px;">
-            <a href="/privacy.html">Privacy Policy</a>
-            <a href="/tos.html">Terms of Service</a>
-            <a href="#">Support</a>
-            <a href="#">API</a>
-        </p>
+    <footer style="text-align:center; padding:24px; color:#4a5a6a; font-size:12px; border-top:1px solid #141b24; margin-top:20px;">
+        <p>Stronghold Kingdoms © Firefly Studios. Fan companion dashboard.
+        <a href="/privacy.html" style="color:#6a7a8a; margin:0 8px;">Privacy</a>
+        <a href="/tos.html" style="color:#6a7a8a; margin:0 8px;">Terms</a></p>
     </footer>
+
+    <!-- MODAL -->
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+        <div class="modal" id="modalContent">
+            <button class="modal-close" onclick="closeModal()">✕</button>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- TOAST -->
+    <div class="toast" id="toast"></div>
+
+<script>
+// ============================================================
+// GAME STATE
+// ============================================================
+const state = {
+    gold: 1200,
+    food: 800,
+    wood: 600,
+    stone: 400,
+    population: 320,
+    honor: 100,
+    military: { swordsmen: 12, archers: 5, knights: 2, siege: 0 },
+    buildings: {
+        keep: { level: 1, name: 'Keep', icon: '🏰', desc: 'Castle center', maxLevel: 10 },
+        farm: { level: 2, name: 'Farm', icon: '🌾', desc: 'Produces food', maxLevel: 10 },
+        lumber: { level: 2, name: 'Lumber Mill', icon: '🪵', desc: 'Produces wood', maxLevel: 10 },
+        quarry: { level: 1, name: 'Quarry', icon: '🪨', desc: 'Produces stone', maxLevel: 10 },
+        market: { level: 1, name: 'Market', icon: '🏪', desc: 'Generates gold', maxLevel: 10 },
+        barracks: { level: 1, name: 'Barracks', icon: '⚔️', desc: 'Trains troops', maxLevel: 10 },
+        wall: { level: 1, name: 'Walls', icon: '🧱', desc: 'Defense', maxLevel: 10 },
+        church: { level: 0, name: 'Church', icon: '⛪', desc: 'Generates honor', maxLevel: 5 },
+    },
+    research: {
+        farming: { level: 0, name: 'Farming', desc: '+20% food output', maxLevel: 5 },
+        mining: { level: 0, name: 'Mining', desc: '+20% stone output', maxLevel: 5 },
+        forestry: { level: 0, name: 'Forestry', desc: '+20% wood output', maxLevel: 5 },
+        trade: { level: 0, name: 'Trade', desc: '+20% gold income', maxLevel: 5 },
+        warfare: { level: 0, name: 'Warfare', desc: 'Stronger troops', maxLevel: 5 },
+        diplomacy: { level: 1, name: 'Diplomacy', desc: 'Faster honor gain', maxLevel: 5 },
+    },
+    tiles: [],
+    activityLog: [],
+    battleLog: [],
+    tickInterval: null,
+};
+
+// ============================================================
+// INIT
+// ============================================================
+function init() {
+    generateMap();
+    renderAll();
+    if (!state.tickInterval) {
+        state.tickInterval = setInterval(gameTick, 3000);
+    }
+    addLog('🎮 Your kingdom has been established. Build and conquer!');
+}
+
+// ============================================================
+// MAP
+// ============================================================
+function generateMap() {
+    const tiles = [];
+    const total = 50;
+    // Player starts with 2 owned tiles
+    for (let i = 0; i < total; i++) {
+        const r = Math.random();
+        let owner;
+        if (i < 2) owner = 'player';
+        else if (r < 0.25) owner = 'enemy';
+        else owner = 'unclaimed';
+        const type = ['plains','forest','mountain','water','swamp'][Math.floor(Math.random()*5)];
+        const defence = Math.floor(Math.random() * 30) + 5;
+        tiles.push({ id: i, owner, type, defence, army: owner === 'enemy' ? Math.floor(Math.random()*40)+10 : 0 });
+    }
+    state.tiles = tiles;
+}
+
+function renderMap() {
+    const el = document.getElementById('worldMap');
+    if (!el) return;
+    const tiles = state.tiles;
+    el.innerHTML = tiles.map((t, i) => {
+        let color, icon;
+        if (t.owner === 'player') { color = '#1a2a1a'; icon = '🟩'; }
+        else if (t.owner === 'enemy') { color = '#2a1a1a'; icon = '🟥'; }
+        else { color = '#1a1a1a'; icon = '⬛'; }
+        let terrain = '';
+        if (t.type === 'forest') terrain = '🌲';
+        else if (t.type === 'mountain') terrain = '⛰️';
+        else if (t.type === 'water') terrain = '🌊';
+        else if (t.type === 'swamp') terrain = '🌿';
+        return `<div class="map-tile" style="background:${color}" onclick="clickTile(${i})" title="Tile ${i+1} - ${t.type.toUpperCase()} (Def: ${t.defence})">${t.owner === 'player' ? '🏰' : t.owner === 'enemy' ? '⚔️' : terrain}</div>`;
+    }).join('');
+    updateCounts();
+}
+
+function updateCounts() {
+    const own = state.tiles.filter(t => t.owner === 'player').length;
+    const en = state.tiles.filter(t => t.owner === 'enemy').length;
+    const un = state.tiles.filter(t => t.owner === 'unclaimed').length;
+    document.getElementById('ownedTiles').textContent = own;
+    document.getElementById('enemyTiles').textContent = en;
+    document.getElementById('unclaimedTiles').textContent = un;
+}
+
+function clickTile(i) {
+    const t = state.tiles[i];
+    if (t.owner === 'player') {
+        showModal('territory', `🏰 Your Territory\nTile ${i+1} (${t.type.toUpperCase()})\nDefense: ${t.defence}\nThis land is secure under your rule.`);
+    } else if (t.owner === 'enemy') {
+        showModal('battle', `⚔️ Enemy Territory\nTile ${i+1} (${t.type.toUpperCase()})\nEnemy Army: ${t.army} troops\nDefense Bonus: ${t.defence}%\n\nAttack this territory?`,
+            () => battleTile(i));
+    } else {
+        showModal('claim', `⬛ Unclaimed Land\nTile ${i+1} (${t.type.toUpperCase()})\nClaim this territory?`,
+            () => claimTile(i));
+    }
+}
+
+function claimTile(i) {
+    const t = state.tiles[i];
+    if (t.owner !== 'unclaimed') return toast('Already claimed!');
+    const cost = 100;
+    if (state.gold < cost) return toast(`❌ Need ${cost} gold!`);
+    state.gold -= cost;
+    t.owner = 'player';
+    t.defence += 5;
+    renderMap();
+    renderStats();
+    addLog(`🏴 Claimed territory ${i+1} (${t.type})`);
+    toast(`✅ Territory ${i+1} claimed!`);
+    updateCounts();
+}
+
+function claimRandomTile() {
+    const unclaimed = state.tiles.filter(t => t.owner === 'unclaimed');
+    if (!unclaimed.length) return toast('❌ No unclaimed territories!');
+    const t = unclaimed[Math.floor(Math.random() * unclaimed.length)];
+    claimTile(state.tiles.indexOf(t));
+}
+
+function battleTile(i) {
+    const t = state.tiles[i];
+    if (t.owner !== 'enemy') return;
+    const myPower = state.military.swordsmen * 3 + state.military.archers * 4 + state.military.knights * 10 + state.military.siege * 15;
+    if (myPower === 0) return toast('❌ No troops to attack!');
+    const enemyPower = t.army * (1 + t.defence / 100);
+    const odds = myPower / (myPower + enemyPower);
+    const roll = Math.random();
+    const log = document.getElementById('battleLog');
+    const win = roll < odds * 1.1;
+    const msg = win ? `🏆 VICTORY! Captured tile ${i+1}! (${Math.round(odds*100)}% odds)` : `💀 DEFEATED at tile ${i+1}. Army decimated.`;
+    const cls = win ? 'win' : 'lose';
+    log.innerHTML = `<div class="${cls}">${msg}</div>` + log.innerHTML;
+    state.battleLog.push(msg);
+
+    if (win) {
+        t.owner = 'player';
+        const loot = Math.floor(Math.random() * 200) + 50;
+        state.gold += loot;
+        addLog(`🏆 Victorious! Captured tile ${i+1}. Looted ${loot} gold.`);
+        toast(`🏆 Victory! +${loot} gold`);
+        // Lose some troops
+        const losses = Math.floor(Math.random() * 0.4 * (state.military.swordsmen + state.military.archers + state.military.knights));
+        loseTroops(losses);
+    } else {
+        const losses = Math.floor(Math.random() * 0.6 * (state.military.swordsmen + state.military.archers + state.military.knights)) + 3;
+        loseTroops(losses);
+        addLog(`💀 Defeated at tile ${i+1}. Lost ${losses} troops.`);
+        toast(`💀 Defeated! Lost ${losses} troops`);
+    }
+    renderMap();
+    renderAll();
+}
+
+function autoBattle() {
+    const enemies = state.tiles.filter(t => t.owner === 'enemy');
+    if (!enemies.length) return toast('❌ No enemies nearby!');
+    // Attack the weakest
+    enemies.sort((a, b) => a.army - b.army);
+    const idx = state.tiles.indexOf(enemies[0]);
+    battleTile(idx);
+}
+
+function loseTroops(n) {
+    let remaining = n;
+    for (const type of ['knights', 'swordsmen', 'archers', 'siege']) {
+        if (remaining <= 0) break;
+        const take = Math.min(state.military[type], remaining);
+        state.military[type] -= take;
+        remaining -= take;
+    }
+    renderArmy();
+    renderStats();
+}
+
+// ============================================================
+// BUILDINGS
+// ============================================================
+function renderBuildings() {
+    const el = document.getElementById('buildGrid');
+    if (!el) return;
+    el.innerHTML = Object.entries(state.buildings).map(([key, b]) => {
+        const cost = getUpgradeCost(key, b.level);
+        const canAfford = state.gold >= cost.gold && state.wood >= cost.wood && state.stone >= cost.stone;
+        const maxed = b.level >= b.maxLevel;
+        return `<div class="build-card" onclick="${maxed ? '' : `upgradeBuilding('${key}')`}" title="${b.desc}">
+            <div class="icon">${b.icon}</div>
+            <h4>${b.name}</h4>
+            <div class="level">Level ${b.level}${maxed ? ' ⭐ MAX' : ''}</div>
+            ${maxed ? '' : `<div class="cost">💰${cost.gold} 🪵${cost.wood} 🪨${cost.stone}</div>`}
+        </div>`;
+    }).join('');
+}
+
+function getUpgradeCost(key, level) {
+    const mult = level + 1;
+    return { gold: 80 * mult, wood: 40 * mult, stone: 30 * mult };
+}
+
+function upgradeBuilding(key) {
+    const b = state.buildings[key];
+    if (b.level >= b.maxLevel) return toast('⭐ Already max level!');
+    const cost = getUpgradeCost(key, b.level);
+    if (state.gold < cost.gold || state.wood < cost.wood || state.stone < cost.stone)
+        return toast('❌ Not enough resources!');
+    state.gold -= cost.gold;
+    state.wood -= cost.wood;
+    state.stone -= cost.stone;
+    b.level++;
+    addLog(`🏗️ Upgraded ${b.name} to Level ${b.level}`);
+    toast(`✅ ${b.name} → Level ${b.level}`);
+    renderAll();
+}
+
+// ============================================================
+// ARMY
+// ============================================================
+const UNIT_TYPES = [
+    { key: 'swordsmen', name: 'Swordsmen', icon: '⚔️', cost: { gold: 30, food: 20 } },
+    { key: 'archers', name: 'Archers', icon: '🏹', cost: { gold: 40, food: 15 } },
+    { key: 'knights', name: 'Knights', icon: '🐴', cost: { gold: 80, food: 30 } },
+    { key: 'siege', name: 'Siege', icon: '💣', cost: { gold: 150, food: 40 } },
+];
+
+function renderArmy() {
+    const el = document.getElementById('armyGrid');
+    if (!el) return;
+    el.innerHTML = UNIT_TYPES.map(u => {
+        const count = state.military[u.key];
+        const canAfford = state.gold >= u.cost.gold && state.food >= u.cost.food;
+        return `<div class="unit-card" onclick="recruitUnit('${u.key}')" title="Recruit: 💰${u.cost.gold} 🌾${u.cost.food}">
+            <div class="icon">${u.icon}</div>
+            <div class="count">${count}</div>
+            <div class="name">${u.name}</div>
+            <div style="font-size:10px;color:#6a7a8a;margin-top:4px;">💰${u.cost.gold} 🌾${u.cost.food}</div>
+        </div>`;
+    }).join('');
+    updateArmyCount();
+}
+
+function updateArmyCount() {
+    const total = Object.values(state.military).reduce((a, b) => a + b, 0);
+    const el = document.getElementById('armyCount');
+    if (el) el.textContent = total;
+}
+
+function recruitUnit(key) {
+    const u = UNIT_TYPES.find(x => x.key === key);
+    if (!u) return;
+    if (state.gold < u.cost.gold || state.food < u.cost.food) return toast('❌ Not enough resources!');
+    state.gold -= u.cost.gold;
+    state.food -= u.cost.food;
+    state.military[key] = (state.military[key] || 0) + 1;
+    addLog(`🎯 Recruited 1 ${u.name}`);
+    toast(`✅ 1 ${u.name} recruited!`);
+    renderAll();
+}
+
+function autoRecruit() {
+    const affordable = UNIT_TYPES.filter(u => state.gold >= u.cost.gold && state.food >= u.cost.food);
+    if (!affordable.length) return toast('❌ Not enough resources to recruit!');
+    const u = affordable[Math.floor(Math.random() * affordable.length)];
+    recruitUnit(u.key);
+}
+
+// ============================================================
+// RESEARCH
+// ============================================================
+function renderResearch() {
+    const el = document.getElementById('techGrid');
+    if (!el) return;
+    el.innerHTML = Object.entries(state.research).map(([key, r]) => {
+        const maxed = r.level >= r.maxLevel;
+        const cost = 100 * (r.level + 1);
+        const canAfford = state.gold >= cost;
+        const pct = (r.level / r.maxLevel) * 100;
+        return `<div class="tech-card" onclick="${maxed ? '' : `doResearch('${key}')`}">
+            <div class="name">${r.name} ${maxed ? '⭐' : `(${r.level}/${r.maxLevel})`}</div>
+            <div class="desc">${r.desc}</div>
+            <div class="progress"><div class="bar" style="width:${pct}%"></div></div>
+            ${maxed ? '' : `<div style="color:#6a7a8a;font-size:11px;margin-top:4px;">💰${cost}</div>`}
+        </div>`;
+    }).join('');
+}
+
+function doResearch(key) {
+    const r = state.research[key];
+    if (r.level >= r.maxLevel) return toast('⭐ Already maxed!');
+    const cost = 100 * (r.level + 1);
+    if (state.gold < cost) return toast(`❌ Need ${cost} gold!`);
+    state.gold -= cost;
+    r.level++;
+    addLog(`🔬 Researched ${r.name} Level ${r.level}`);
+    toast(`✅ ${r.name} Level ${r.level}!`);
+    renderAll();
+}
+
+// ============================================================
+// ESTATES
+// ============================================================
+function renderEstates() {
+    const el = document.getElementById('villageGrid');
+    if (!el) return;
+    const estates = [
+        { name: 'Avalon Keep', type: 'Capital', level: state.buildings.keep.level, icon: '🏰', resources: `🏰 Lv.${state.buildings.keep.level}` },
+        { name: 'Northwood Village', type: 'Farming', level: state.buildings.farm.level, icon: '🌾', resources: `🌾 Lv.${state.buildings.farm.level}` },
+        { name: 'Iron Garrison', type: 'Military', level: state.buildings.barracks.level, icon: '⚔️', resources: `⚔️ Lv.${state.buildings.barracks.level}` },
+    ];
+    el.innerHTML = estates.map(e => `
+        <div class="village-card" onclick="switchPage('buildings')">
+            <div class="preview" style="background:linear-gradient(135deg,#1a2a3a,#2a4a3a)">${e.icon}</div>
+            <div class="info">
+                <h4>${e.name}</h4>
+                <p>${e.type}</p>
+                <div class="resources"><span>${e.resources}</span></div>
+            </div>
+        </div>
+    `).join('');
+}
+
+// ============================================================
+// GAME TICK / ECONOMY
+// ============================================================
+function gameTick() {
+    // Production
+    const farmProd = state.buildings.farm.level * 4 + (state.research.farming.level * 2);
+    const woodProd = state.buildings.lumber.level * 3 + (state.research.forestry.level * 2);
+    const stoneProd = state.buildings.quarry.level * 2 + (state.research.mining.level * 2);
+    const goldProd = state.buildings.market.level * 3 + (state.research.trade.level * 2) + Math.floor(state.population / 50);
+
+    state.food += farmProd;
+    state.wood += woodProd;
+    state.stone += stoneProd;
+    state.gold += goldProd;
+
+    // Honor gain
+    const honorGain = (state.buildings.church?.level || 0) * 2 + state.research.diplomacy.level;
+    state.honor += honorGain;
+
+    // Population growth
+    const popGrowth = Math.floor(state.population * 0.02) + 1 + state.buildings.keep.level;
+    state.population += popGrowth;
+
+    // Food consumption
+    const consumption = 1 + Object.values(state.military).reduce((a, b) => a + b, 0);
+    state.food = Math.max(0, state.food - consumption);
+
+    renderStats();
+}
+
+// ============================================================
+// RENDER ALL
+// ============================================================
+function renderStats() {
+    document.getElementById('statPopulation').textContent = state.population.toLocaleString();
+    document.getElementById('statGold').textContent = Math.floor(state.gold).toLocaleString();
+    const totalMil = Object.values(state.military).reduce((a, b) => a + b, 0);
+    document.getElementById('statMilitary').textContent = totalMil;
+    document.getElementById('statHonor').textContent = state.honor;
+
+    document.getElementById('statPopGrowth').textContent = `+${Math.floor(state.population * 0.02) + 1 + state.buildings.keep.level} / day`;
+    document.getElementById('statGoldIncome').textContent = `+${state.buildings.market.level * 3 + state.research.trade.level * 2 + Math.floor(state.population / 50)} / day`;
+    document.getElementById('statArmyDetail').textContent = `${totalMil} troops`;
+    const ranks = ['Peasant', 'Squire', 'Knight', 'Baron', 'Earl', 'Duke', 'King'];
+    const rankIdx = Math.min(Math.floor(state.honor / 200), ranks.length - 1);
+    document.getElementById('statRank').textContent = ranks[rankIdx];
+    updateArmyCount();
+}
+
+function renderAll() {
+    renderStats();
+    renderBuildings();
+    renderArmy();
+    renderEstates();
+    renderResearch();
+    renderMap();
+}
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+function switchPage(page) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.sidebar-item').forEach(s => s.classList.remove('active'));
+    const p = document.getElementById('page-' + page);
+    if (p) p.classList.add('active');
+    document.querySelectorAll(`.sidebar-item[data-page="${page}"]`).forEach(s => s.classList.add('active'));
+    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+    document.querySelectorAll(`.nav-links a[onclick*="'${page}'"]`).forEach(a => a.classList.add('active'));
+}
+
+// ============================================================
+// TOAST & LOG
+// ============================================================
+function toast(msg) {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.classList.add('show');
+    setTimeout(() => el.classList.remove('show'), 2500);
+}
+
+function addLog(msg) {
+    const el = document.getElementById('activityList');
+    if (!el) return;
+    state.activityLog.push(msg);
+    const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    el.innerHTML = `<div class="activity-item"><span>🕐${time}</span>${msg}</div>` + el.innerHTML;
+    if (el.children.length > 20) el.removeChild(el.lastChild);
+}
+
+// ============================================================
+// MODAL
+// ============================================================
+function showModal(type, customBody, action) {
+    const overlay = document.getElementById('modalOverlay');
+    const body = document.getElementById('modalBody');
+    let html = '';
+    switch(type) {
+        case 'population':
+            html = `<h2>👥 Population</h2><p>Your kingdom has <strong>${state.population.toLocaleString()}</strong> citizens.<br>Growth rate: +${Math.floor(state.population * 0.02) + 1 + state.buildings.keep.level} / day<br>Food consumption: ${1 + Object.values(state.military).reduce((a, b) => a + b, 0)} / day</p>`;
+            break;
+        case 'gold':
+            html = `<h2>💰 Treasury</h2><p>Gold: <strong>${Math.floor(state.gold).toLocaleString()}</strong><br>Income: +${state.buildings.market.level * 3 + state.research.trade.level * 2 + Math.floor(state.population / 50)} / day</p>`;
+            break;
+        case 'honor':
+            const ranks = ['Peasant', 'Squire', 'Knight', 'Baron', 'Earl', 'Duke', 'King'];
+            const rankIdx = Math.min(Math.floor(state.honor / 200), ranks.length - 1);
+            html = `<h2>👑 Honor & Rank</h2><p>Honor: <strong>${state.honor}</strong><br>Rank: <strong>${ranks[rankIdx]}</strong><br>Next rank: ${ranks[Math.min(rankIdx+1, ranks.length-1)]} at ${(rankIdx+1)*200} honor</p>`;
+            break;
+        case 'lord':
+            html = `<h2>👑 Lord_obvirm</h2><p>Title: Lord of Avalon<br>Honor: ${state.honor}<br>Territories: ${state.tiles.filter(t => t.owner === 'player').length}<br>Army: ${Object.values(state.military).reduce((a,b) => a+b, 0)} troops</p>`;
+            break;
+        case 'faction':
+            html = `<h2>🤝 The Crown Alliance</h2><p>You are a member of <strong>The Crown Alliance</strong> (Rank: Knight).<br>Members online: 12<br>Alliance power: #8 in Kingmaker 4</p>`;
+            break;
+        case 'rankings':
+            html = `<h2>📊 Leaderboards</h2><p>Your Rank: <strong>#342</strong> of 12,847 players<br>Top 3% overall<br>Military Power: #521<br>Economy: #289</p>`;
+            break;
+        case 'tournament':
+            html = `<h2>🏆 Kingmaker 4 Tournament</h2><p>Status: <strong>Active</strong> (ends in 14 days)<br>Your score: 12,847 pts<br>Rank: #342<br>Rewards: Top 500 get exclusive "Dragon Knight" skin</p>`;
+            break;
+        case 'news':
+            html = `<h2>📰 Kingdom News</h2><p>📢 Kingmaker 4 is now live! Battle for supremacy!<br>📢 Easter Treasury Sale — 50% off building upgrades<br>📢 New server: Avalon (EU-West) now open</p>`;
+            break;
+        case 'territory':
+            html = `<h2>🏰 Territory</h2><p>${customBody.replace(/\n/g, '<br>')}</p>`;
+            break;
+        case 'battle':
+            html = `<h2>⚔️ Enemy Territory</h2><p>${customBody.replace(/\n/g, '<br>')}</p>`;
+            if (action) html += `<button class="btn btn-danger" onclick="document.getElementById('modalOverlay').classList.remove('show'); (${action.toString()})()">⚔️ Attack!</button>`;
+            break;
+        case 'claim':
+            html = `<h2>⬛ Unexplored Land</h2><p>${customBody.replace(/\n/g, '<br>')}</p>`;
+            if (action) html += `<button class="btn btn-primary" onclick="document.getElementById('modalOverlay').classList.remove('show'); (${action.toString()})()">🏴 Claim (💰100)</button>`;
+            break;
+        default:
+            html = `<h2>ℹ️</h2><p>${customBody || 'Information'}</p>`;
+    }
+    body.innerHTML = html;
+    overlay.classList.add('show');
+}
+
+function closeModal(e) {
+    if (e && e.target !== document.getElementById('modalOverlay')) return;
+    document.getElementById('modalOverlay').classList.remove('show');
+}
+
+// ============================================================
+// START
+// ============================================================
+document.addEventListener('DOMContentLoaded', init);
+</script>
 </body>
 </html>
