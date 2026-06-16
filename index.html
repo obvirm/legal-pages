@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stronghold Kingdoms - Companion Dashboard</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #0a0e14;
+            color: #c8c8c8;
+            min-height: 100vh;
+        }
+
+        /* Nav */
+        nav {
+            background: #141b24;
+            padding: 12px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #2a3a4a;
+        }
+        .logo {
+            font-size: 22px;
+            font-weight: 800;
+            color: #e6b800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .logo span { color: #c8c8c8; font-weight: 300; }
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a { color: #8a9ba8; text-decoration: none; font-size: 14px; font-weight: 500; }
+        .nav-links a:hover { color: #e6b800; }
+        .user-badge {
+            display: flex; align-items: center; gap: 10px;
+            background: #1e2833; padding: 8px 16px; border-radius: 8px;
+        }
+        .user-badge img { width: 28px; height: 28px; border-radius: 50%; background: #2a3a4a; }
+        .user-badge .name { font-size: 13px; color: #e0e0e0; }
+        .user-badge .crown { color: #e6b800; font-size: 12px; }
+
+        /* Main Layout */
+        .container { display: flex; max-width: 1400px; margin: 0 auto; padding: 20px; gap: 20px; }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px; flex-shrink: 0;
+            background: #141b24; border-radius: 12px; padding: 20px;
+            height: fit-content;
+        }
+        .sidebar h3 { color: #e6b800; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+        .sidebar-item {
+            display: flex; align-items: center; gap: 12px;
+            padding: 10px 12px; border-radius: 8px; cursor: pointer;
+            margin-bottom: 4px; font-size: 14px;
+        }
+        .sidebar-item:hover, .sidebar-item.active { background: #1e2833; color: #e6b800; }
+        .sidebar-item .icon { width: 20px; text-align: center; }
+        .sidebar-item .count {
+            margin-left: auto; background: #2a3a4a; padding: 2px 8px;
+            border-radius: 10px; font-size: 11px; color: #8a9ba8;
+        }
+        .sidebar-item:hover .count { background: #3a4a5a; }
+
+        /* Main Content */
+        .content { flex: 1; }
+
+        /* Kingdom Stats */
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 20px; }
+        .stat-card {
+            background: #141b24; border-radius: 12px; padding: 18px;
+            border-left: 3px solid #e6b800;
+        }
+        .stat-card .label { font-size: 11px; text-transform: uppercase; color: #6a7a8a; letter-spacing: 0.5px; }
+        .stat-card .value { font-size: 26px; font-weight: 700; color: #f0f0f0; margin-top: 4px; }
+        .stat-card .sub { font-size: 12px; color: #6a7a8a; margin-top: 2px; }
+
+        /* Section Title */
+        .section-title {
+            display: flex; justify-content: space-between; align-items: center;
+            margin: 24px 0 14px;
+        }
+        .section-title h2 { font-size: 18px; color: #f0f0f0; }
+        .section-title a { color: #e6b800; font-size: 13px; text-decoration: none; }
+
+        /* Estate Cards */
+        .village-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+        .village-card {
+            background: #141b24; border-radius: 12px; overflow: hidden;
+            transition: transform 0.2s;
+        }
+        .village-card:hover { transform: translateY(-2px); }
+        .village-card .preview {
+            height: 100px; background: linear-gradient(135deg, #1a2a3a, #2a4a3a);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 36px;
+        }
+        .village-card .info { padding: 14px; }
+        .village-card .info h4 { color: #f0f0f0; font-size: 15px; }
+        .village-card .info p { color: #6a7a8a; font-size: 12px; margin-top: 4px; }
+        .village-card .info .resources { display: flex; gap: 12px; margin-top: 8px; font-size: 12px; color: #8a9ba8; }
+        .village-card .info .resources span { display: flex; align-items: center; gap: 4px; }
+
+        /* Activity Feed */
+        .activity-list { background: #141b24; border-radius: 12px; padding: 16px; }
+        .activity-item {
+            display: flex; align-items: center; gap: 12px;
+            padding: 10px 0; border-bottom: 1px solid #1e2833;
+        }
+        .activity-item:last-child { border-bottom: none; }
+        .activity-item .time { color: #6a7a8a; font-size: 12px; width: 60px; }
+        .activity-item .event { font-size: 13px; }
+        .activity-item .event strong { color: #e0e0e0; }
+        .activity-item .event .highlight { color: #e6b800; }
+
+        /* Footer */
+        footer {
+            text-align: center; padding: 30px;
+            color: #4a5a6a; font-size: 13px; border-top: 1px solid #141b24; margin-top: 40px;
+        }
+        footer a { color: #6a7a8a; margin: 0 10px; text-decoration: none; }
+
+        /* Responsive */
+        @media (max-width: 1024px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } .village-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 768px) { .sidebar { display: none; } .stats-grid { grid-template-columns: 1fr; } .village-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">Stronghold <span>Kingdoms</span></div>
+        <div class="nav-links">
+            <a href="#">Dashboard</a>
+            <a href="#">Map</a>
+            <a href="#">Military</a>
+            <a href="#">Diplomacy</a>
+            <a href="#">Market</a>
+            <a href="#">Leaderboards</a>
+        </div>
+        <div class="user-badge">
+            <div class="name">Lord_obvirm</div>
+            <div class="crown">👑</div>
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Ccircle cx='14' cy='14' r='14' fill='%232a3a4a'/%3E%3Ctext x='14' y='18' text-anchor='middle' fill='%23e6b800' font-size='14' font-weight='bold'%3ESK%3C/text%3E%3C/svg%3E" alt="avatar">
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h3>My Kingdom</h3>
+            <div class="sidebar-item active"><span class="icon">🏰</span> Overview <span class="count">3</span></div>
+            <div class="sidebar-item"><span class="icon">🏘️</span> Estates <span class="count">7</span></div>
+            <div class="sidebar-item"><span class="icon">⚔️</span> Army <span class="count">4</span></div>
+            <div class="sidebar-item"><span class="icon">📜</span> Research</div>
+            <div class="sidebar-item"><span class="icon">🤝</span> Faction <span class="count">1</span></div>
+            <div class="sidebar-item"><span class="icon">📊</span> Rankings</div>
+
+            <h3 style="margin-top: 24px;">World</h3>
+            <div class="sidebar-item"><span class="icon">🗺️</span> World Map</div>
+            <div class="sidebar-item"><span class="icon">🏆</span> Tournaments</div>
+            <div class="sidebar-item"><span class="icon">📰</span> News</div>
+        </div>
+
+        <!-- Main -->
+        <div class="content">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="label">Population</div>
+                    <div class="value">12,847</div>
+                    <div class="sub">+320 / day</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">Gold</div>
+                    <div class="value">48.2k</div>
+                    <div class="sub">+1.4k / day</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">Military</div>
+                    <div class="value">1,240</div>
+                    <div class="sub">12 knights · 840 swordsmen</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">Honor</div>
+                    <div class="value">3,752</div>
+                    <div class="sub">Rank: Baron</div>
+                </div>
+            </div>
+
+            <div class="section-title">
+                <h2>My Estates</h2>
+                <a href="#">Manage →</a>
+            </div>
+            <div class="village-grid">
+                <div class="village-card">
+                    <div class="preview">🏰</div>
+                    <div class="info">
+                        <h4>Avalon Keep</h4>
+                        <p>Capital · Level 18</p>
+                        <div class="resources">
+                            <span>🪵 2.4k</span>
+                            <span>🪨 1.8k</span>
+                            <span>🌾 3.1k</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="village-card">
+                    <div class="preview">🏘️</div>
+                    <div class="info">
+                        <h4>Northwood Village</h4>
+                        <p>Farming · Level 12</p>
+                        <div class="resources">
+                            <span>🪵 1.2k</span>
+                            <span>🪨 800</span>
+                            <span>🌾 4.2k</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="village-card">
+                    <div class="preview">⚔️</div>
+                    <div class="info">
+                        <h4>Iron Garrison</h4>
+                        <p>Military · Level 9</p>
+                        <div class="resources">
+                            <span>🪵 600</span>
+                            <span>🪨 1.4k</span>
+                            <span>⚔️ 580 troops</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-title">
+                <h2>Recent Activity</h2>
+                <a href="#">All logs →</a>
+            </div>
+            <div class="activity-list">
+                <div class="activity-item">
+                    <span class="time">12:34</span>
+                    <span class="event"><strong>Iron Garrison</strong> — <span class="highlight">Barracks upgraded</span> to Level 6</span>
+                </div>
+                <div class="activity-item">
+                    <span class="time">11:15</span>
+                    <span class="event"><strong>Lord_obvirm</strong> — <span class="highlight">Trade route established</span> with House Stark</span>
+                </div>
+                <div class="activity-item">
+                    <span class="time">09:47</span>
+                    <span class="event"><strong>Avalon Keep</strong> — <span class="highlight">Scout reports</span> enemy activity at coordinates (24, 18)</span>
+                </div>
+                <div class="activity-item">
+                    <span class="time">08:02</span>
+                    <span class="event"><strong>Northwood Village</strong> — <span class="highlight">Harvest completed</span> — 2,400 food stockpiled</span>
+                </div>
+                <div class="activity-item">
+                    <span class="time">06:30</span>
+                    <span class="event"><strong>Tax collection</strong> — <span class="highlight">3,200 gold</span> added to treasury</span>
+                </div>
+            </div>
+
+            <div class="section-title" style="margin-top: 30px;">
+                <h2>Active World Map — Kingmaker 4</h2>
+                <a href="#">Full map →</a>
+            </div>
+            <div style="background: #141b24; border-radius: 12px; padding: 20px; text-align: center;">
+                <div style="display: grid; grid-template-columns: repeat(10, 1fr); gap: 4px; max-width: 600px; margin: 0 auto;">
+                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
+                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
+                    <span style="background:#2a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟨</span>
+                    <span style="background:#2a1a1a; padding:8px; border-radius:4px; font-size:10px;">🟥</span>
+                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
+                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
+                    <span style="background:#2a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟨</span>
+                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
+                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
+                    <span style="background:#2a1a1a; padding:8px; border-radius:4px; font-size:10px;">🟥</span>
+                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
+                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
+                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
+                    <span style="background:#2a1a1a; padding:8px; border-radius:4px; font-size:10px;">🟥</span>
+                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
+                    <span style="background:#2a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟨</span>
+                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
+                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
+                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
+                    <span style="background:#2a1a1a; padding:8px; border-radius:4px; font-size:10px;">🟥</span>
+                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
+                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
+                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
+                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
+                    <span style="background:#2a1a1a; padding:8px; border-radius:4px; font-size:10px;">🟥</span>
+                    <span style="background:#2a1a1a; padding:8px; border-radius:4px; font-size:10px;">🟥</span>
+                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
+                    <span style="background:#2a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟨</span>
+                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
+                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
+                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
+                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
+                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
+                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
+                    <span style="background:#2a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟨</span>
+                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
+                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
+                    <span style="background:#2a1a1a; padding:8px; border-radius:4px; font-size:10px;">🟥</span>
+                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
+                    <span style="background:#1a2a1a; padding:8px; border-radius:4px; font-size:10px;">🟩</span>
+                </div>
+                <p style="color: #6a7a8a; margin-top: 14px; font-size: 13px;">📌 3 active sieges · 12 alliance members online · 2 pending attacks</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Stronghold Kingdoms is © Firefly Studios. This companion dashboard is not affiliated with Firefly Studios.</p>
+        <p style="margin-top: 8px;">
+            <a href="/privacy.html">Privacy Policy</a>
+            <a href="/tos.html">Terms of Service</a>
+            <a href="#">Support</a>
+            <a href="#">API</a>
+        </p>
+    </footer>
+</body>
+</html>
