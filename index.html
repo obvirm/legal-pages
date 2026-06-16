@@ -13,6 +13,7 @@
             min-height: 100vh;
             overflow-x: hidden;
         }
+        svg { flex-shrink: 0; }
         nav {
             background: #141b24;
             padding: 12px 40px;
@@ -23,10 +24,10 @@
             flex-wrap: wrap;
             gap: 10px;
         }
-        .logo { font-size: 22px; font-weight: 800; color: #e6b800; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; }
+        .logo { font-size: 22px; font-weight: 800; color: #e6b800; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; display: flex; align-items: center; gap: 8px; }
         .logo span { color: #c8c8c8; font-weight: 300; }
         .nav-links { display: flex; gap: 20px; flex-wrap: wrap; }
-        .nav-links a { color: #8a9ba8; text-decoration: none; font-size: 14px; font-weight: 500; cursor: pointer; padding: 4px 8px; border-radius: 6px; }
+        .nav-links a { color: #8a9ba8; text-decoration: none; font-size: 14px; font-weight: 500; cursor: pointer; padding: 4px 8px; border-radius: 6px; display: flex; align-items: center; gap: 6px; }
         .nav-links a:hover, .nav-links a.active { color: #e6b800; background: #1e2833; }
         .user-badge { display: flex; align-items: center; gap: 10px; background: #1e2833; padding: 8px 16px; border-radius: 8px; cursor: pointer; }
         .user-badge:hover { background: #2a3a4a; }
@@ -36,7 +37,7 @@
             background: #141b24; border-radius: 12px; padding: 16px;
             height: fit-content; position: sticky; top: 20px;
         }
-        .sidebar h3 { color: #e6b800; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; margin-top: 16px; }
+        .sidebar h3 { color: #e6b800; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; margin-top: 16px; display: flex; align-items: center; gap: 6px; }
         .sidebar h3:first-child { margin-top: 0; }
         .sidebar-item {
             display: flex; align-items: center; gap: 10px;
@@ -49,27 +50,25 @@
         .page { display: none; }
         .page.active { display: block; }
 
-        /* Stats */
         .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 20px; }
         .stat-card { background: #141b24; border-radius: 12px; padding: 18px; border-left: 3px solid #e6b800; }
-        .stat-card .label { font-size: 11px; text-transform: uppercase; color: #6a7a8a; letter-spacing: 0.5px; }
+        .stat-card .label { font-size: 11px; text-transform: uppercase; color: #6a7a8a; letter-spacing: 0.5px; display: flex; align-items: center; gap: 6px; }
         .stat-card .value { font-size: 26px; font-weight: 700; color: #f0f0f0; margin-top: 4px; }
         .stat-card .sub { font-size: 12px; color: #6a7a8a; margin-top: 2px; }
         .stat-card.clickable { cursor: pointer; transition: 0.2s; }
         .stat-card.clickable:hover { transform: translateY(-2px); border-left-color: #ffd700; }
 
         .section-title { display: flex; justify-content: space-between; align-items: center; margin: 20px 0 12px; }
-        .section-title h2 { font-size: 18px; color: #f0f0f0; }
-        .section-title a { color: #e6b800; font-size: 13px; text-decoration: none; cursor: pointer; }
+        .section-title h2 { font-size: 18px; color: #f0f0f0; display: flex; align-items: center; gap: 8px; }
+        .section-title a { color: #e6b800; font-size: 13px; text-decoration: none; cursor: pointer; display: flex; align-items: center; gap: 4px; }
 
-        /* Cards */
         .village-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
         .village-card {
             background: #141b24; border-radius: 12px; overflow: hidden; cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
         }
         .village-card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.4); }
-        .village-card .preview { height: 80px; display: flex; align-items: center; justify-content: center; font-size: 32px; }
+        .village-card .preview { height: 80px; display: flex; align-items: center; justify-content: center; }
         .village-card .info { padding: 12px; }
         .village-card .info h4 { color: #f0f0f0; font-size: 14px; }
         .village-card .info p { color: #6a7a8a; font-size: 11px; margin-top: 2px; }
@@ -79,10 +78,9 @@
         .activity-item { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid #1e2833; font-size: 13px; }
         .activity-item:last-child { border-bottom: none; }
 
-        /* Buttons */
         .btn {
             padding: 8px 18px; border: none; border-radius: 8px; cursor: pointer;
-            font-size: 13px; font-weight: 600; transition: 0.2s;
+            font-size: 13px; font-weight: 600; transition: 0.2s; display: inline-flex; align-items: center; gap: 6px;
         }
         .btn-primary { background: #e6b800; color: #0a0e14; }
         .btn-primary:hover { background: #ffd700; transform: scale(1.02); }
@@ -93,41 +91,37 @@
         .btn-sm { padding: 5px 12px; font-size: 11px; }
         .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
 
-        /* World Map */
         .map-grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 3px; max-width: 500px; margin: 0 auto; }
         .map-tile {
             aspect-ratio: 1; border-radius: 3px; cursor: pointer;
             display: flex; align-items: center; justify-content: center;
-            font-size: 14px; transition: 0.15s; position: relative;
+            transition: 0.15s; position: relative;
         }
         .map-tile:hover { transform: scale(1.15); z-index: 2; }
         .map-tile.owned { box-shadow: 0 0 0 1px #e6b800; }
         .map-tile.enemy { box-shadow: 0 0 0 1px #cc3333; }
 
-        /* Buildings */
         .build-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
         .build-card {
             background: #141b24; border-radius: 12px; padding: 16px; text-align: center;
             cursor: pointer; transition: 0.2s;
         }
         .build-card:hover { background: #1e2833; transform: translateY(-2px); }
-        .build-card .icon { font-size: 32px; margin-bottom: 6px; }
+        .build-card .icon { margin-bottom: 6px; display: flex; justify-content: center; }
         .build-card h4 { color: #f0f0f0; font-size: 14px; }
         .build-card .cost { color: #6a7a8a; font-size: 11px; margin-top: 4px; }
         .build-card .level { color: #e6b800; font-size: 12px; margin-top: 4px; }
 
-        /* Army */
         .army-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
         .unit-card {
             background: #141b24; border-radius: 12px; padding: 16px; text-align: center;
             cursor: pointer; transition: 0.2s;
         }
         .unit-card:hover { background: #1e2833; }
-        .unit-card .icon { font-size: 28px; }
+        .unit-card .icon { margin-bottom: 4px; display: flex; justify-content: center; }
         .unit-card .count { font-size: 22px; font-weight: 700; color: #f0f0f0; }
         .unit-card .name { font-size: 12px; color: #8a9ba8; }
 
-        /* Modal */
         .modal-overlay {
             display: none; position: fixed; inset: 0;
             background: rgba(0,0,0,0.7); z-index: 100;
@@ -139,13 +133,12 @@
             max-width: 500px; width: 90%; border: 1px solid #2a3a4a;
             max-height: 80vh; overflow-y: auto;
         }
-        .modal h2 { color: #f0f0f0; margin-bottom: 12px; }
+        .modal h2 { color: #f0f0f0; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
         .modal p { color: #8a9ba8; font-size: 14px; line-height: 1.5; }
         .modal .btn { margin-top: 16px; }
         .modal-close { float: right; background: none; border: none; color: #6a7a8a; font-size: 24px; cursor: pointer; }
         .modal-close:hover { color: #f0f0f0; }
 
-        /* Battle */
         .battle-log {
             background: #0a0e14; border-radius: 8px; padding: 12px;
             max-height: 200px; overflow-y: auto; font-family: monospace; font-size: 12px; margin-top: 12px;
@@ -164,6 +157,19 @@
         }
         .toast.show { transform: translateY(0); opacity: 1; }
 
+        .tech-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        .tech-card {
+            background: #141b24; border-radius: 10px; padding: 14px;
+            cursor: pointer; transition: 0.2s;
+        }
+        .tech-card:hover { background: #1e2833; }
+        .tech-card .name { color: #f0f0f0; font-size: 13px; display: flex; align-items: center; gap: 6px; }
+        .tech-card .desc { color: #6a7a8a; font-size: 11px; }
+        .tech-card .progress { margin-top: 8px; height: 4px; background: #2a3a4a; border-radius: 2px; overflow: hidden; }
+        .tech-card .progress .bar { height: 100%; background: #e6b800; border-radius: 2px; transition: width 0.5s; }
+
+        .icon-svg { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+
         @media (max-width: 1024px) {
             .container { flex-direction: column; }
             .sidebar { width: 100%; position: static; display: flex; flex-wrap: wrap; gap: 8px; }
@@ -179,55 +185,44 @@
             .stats-grid { grid-template-columns: 1fr; }
             .village-grid, .build-grid { grid-template-columns: 1fr; }
         }
-
-        /* Scrollbar */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #0a0e14; }
         ::-webkit-scrollbar-thumb { background: #2a3a4a; border-radius: 3px; }
-
-        /* Research tree */
-        .tech-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-        .tech-card {
-            background: #141b24; border-radius: 10px; padding: 14px;
-            cursor: pointer; transition: 0.2s;
-        }
-        .tech-card:hover { background: #1e2833; }
-        .tech-card .name { color: #f0f0f0; font-size: 13px; }
-        .tech-card .desc { color: #6a7a8a; font-size: 11px; }
-        .tech-card .progress { margin-top: 8px; height: 4px; background: #2a3a4a; border-radius: 2px; overflow: hidden; }
-        .tech-card .progress .bar { height: 100%; background: #e6b800; border-radius: 2px; transition: width 0.5s; }
     </style>
 </head>
 <body>
     <nav>
-        <div class="logo" onclick="switchPage('dashboard')">Stronghold <span>Kingdoms</span></div>
+        <div class="logo" onclick="switchPage('dashboard')">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="2" y="10" width="24" height="16" rx="2" stroke="#e6b800" stroke-width="1.5"/><path d="M14 10V6" stroke="#e6b800" stroke-width="2"/><path d="M8 6h12" stroke="#e6b800" stroke-width="2" stroke-linecap="round"/><path d="M7 15h3v5H7z" fill="#e6b800" opacity="0.4"/><path d="M12 14h4v6h-4z" fill="#e6b800" opacity="0.6"/><path d="M18 16h3v4h-3z" fill="#e6b800" opacity="0.4"/></svg>
+            Stronghold <span>Kingdoms</span>
+        </div>
         <div class="nav-links">
-            <a class="active" onclick="switchPage('dashboard')">Dashboard</a>
-            <a onclick="switchPage('map')">Map</a>
-            <a onclick="switchPage('military')">Military</a>
-            <a onclick="switchPage('buildings')">Buildings</a>
-            <a onclick="switchPage('research')">Research</a>
+            <a class="active" onclick="switchPage('dashboard')"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="9" y="1" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="1" y="9" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="9" y="9" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/></svg>Dashboard</a>
+            <a onclick="switchPage('map')"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M1 4l5-2 4 2 5-2v10l-5 2-4-2-5 2V4z" stroke="currentColor" stroke-width="1.2" fill="none"/><path d="M6 2v10M10 4v10" stroke="currentColor" stroke-width="0.8" opacity="0.5"/></svg>Map</a>
+            <a onclick="switchPage('military')"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1v14M4 5l4 3 4-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 13h12" stroke="currentColor" stroke-width="1.2"/></svg>Military</a>
+            <a onclick="switchPage('buildings')"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 14V5l6-4 6 4v9H2z" stroke="currentColor" stroke-width="1.2" fill="none"/><path d="M6 14V9h4v5" stroke="currentColor" stroke-width="1.2"/></svg>Buildings</a>
+            <a onclick="switchPage('research')"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.2"/><path d="M11 11l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>Research</a>
         </div>
         <div class="user-badge" onclick="showModal('lord')">
-            <div>Lord_obvirm 👑</div>
-        </div>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 12c-3 0-5 2-5 5h10c0-3-2-5-5-5zM10 10a3 3 0 100-6 3 3 0 000 6z" stroke="#e6b800" stroke-width="1.2"/><path d="M10 2v1M5 4l1 1M15 4l-1 1" stroke="#e6b800" stroke-width="0.8" opacity="0.5"/></svg>
+            Lord_obvirm</div>
     </nav>
 
     <div class="container">
         <!-- SIDEBAR -->
         <div class="sidebar" id="sidebar">
-            <h3>🏰 My Kingdom</h3>
-            <div class="sidebar-item active" data-page="dashboard" onclick="switchPage('dashboard')"><span>📊</span> Overview</div>
-            <div class="sidebar-item" data-page="buildings" onclick="switchPage('buildings')"><span>🏘️</span> Estates <span class="count" id="estateCount">3</span></div>
-            <div class="sidebar-item" data-page="military" onclick="switchPage('military')"><span>⚔️</span> Army <span class="count" id="armyCount">0</span></div>
-            <div class="sidebar-item" data-page="research" onclick="switchPage('research')"><span>📜</span> Research</div>
-            <div class="sidebar-item" onclick="showModal('faction')"><span>🤝</span> Faction</div>
-            <div class="sidebar-item" onclick="showModal('rankings')"><span>📊</span> Rankings</div>
+            <h3><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="5" width="12" height="8" rx="1" stroke="#e6b800" stroke-width="1"/><path d="M7 5V3M4 3h6" stroke="#e6b800" stroke-width="1.2" stroke-linecap="round"/></svg> My Kingdom</h3>
+            <div class="sidebar-item active" data-page="dashboard" onclick="switchPage('dashboard')"><span><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="9" y="2" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="2" y="9" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="9" y="9" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/></svg></span> Overview</div>
+            <div class="sidebar-item" data-page="buildings" onclick="switchPage('buildings')"><span><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 14V5l6-4 6 4v9H2z" stroke="currentColor" stroke-width="1.2" fill="none"/><path d="M6 14V9h4v5" stroke="currentColor" stroke-width="1.2"/></svg></span> Estates <span class="count" id="estateCount">3</span></div>
+            <div class="sidebar-item" data-page="military" onclick="switchPage('military')"><span><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1v14M4 5l4 3 4-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 13h12" stroke="currentColor" stroke-width="1.2"/></svg></span> Army <span class="count" id="armyCount">0</span></div>
+            <div class="sidebar-item" data-page="research" onclick="switchPage('research')"><span><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.2"/><path d="M11 11l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span> Research</div>
+            <div class="sidebar-item" onclick="showModal('faction')"><span><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 11l4-3 4 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><circle cx="4" cy="6" r="2" stroke="currentColor" stroke-width="1.2"/><circle cx="12" cy="6" r="2" stroke="currentColor" stroke-width="1.2"/><path d="M8 8a2 2 0 100-4 2 2 0 000 4z" fill="currentColor" opacity="0.3"/></svg></span> Faction</div>
+            <div class="sidebar-item" onclick="showModal('rankings')"><span><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1v10M5 11l3 4 3-4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 14h12" stroke="currentColor" stroke-width="1.2"/></svg></span> Rankings</div>
 
-            <h3>🌍 World</h3>
-            <div class="sidebar-item" data-page="map" onclick="switchPage('map')"><span>🗺️</span> World Map</div>
-            <div class="sidebar-item" onclick="showModal('tournament')"><span>🏆</span> Tournaments</div>
-            <div class="sidebar-item" onclick="showModal('news')"><span>📰</span> News</div>
+            <h3><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#e6b800" stroke-width="1"/><path d="M7 4v4M7 9h1" stroke="#e6b800" stroke-width="1" stroke-linecap="round"/></svg> World</h3>
+            <div class="sidebar-item" data-page="map" onclick="switchPage('map')"><span><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M1 4l5-2 4 2 5-2v10l-5 2-4-2-5 2V4z" stroke="currentColor" stroke-width="1.2" fill="none"/><path d="M6 2v10M10 4v10" stroke="currentColor" stroke-width="0.8" opacity="0.5"/></svg></span> World Map</div>
+            <div class="sidebar-item" onclick="showModal('tournament')"><span><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 3V1h8v2" stroke="currentColor" stroke-width="1.2"/><rect x="2" y="3" width="12" height="4" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M8 7v4M5 14l3-3 3 3" stroke="currentColor" stroke-width="1.2"/></svg></span> Tournaments</div>
+            <div class="sidebar-item" onclick="showModal('news')"><span><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M5 6h6M5 9h4M5 12h6" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></span> News</div>
         </div>
 
         <!-- MAIN CONTENT -->
@@ -237,73 +232,78 @@
             <div class="page active" id="page-dashboard">
                 <div class="stats-grid">
                     <div class="stat-card clickable" onclick="showModal('population')">
-                        <div class="label">👥 Population</div>
+                        <div class="label"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="6" cy="5" r="3" stroke="currentColor" stroke-width="1.2"/><circle cx="12" cy="6" r="2" stroke="currentColor" stroke-width="1.2"/><path d="M1 14c0-3 2-5 5-5s5 2 5 5M9 14c0-2 1.5-4 3-4s3 2 3 4" stroke="currentColor" stroke-width="1.2"/></svg> Population</div>
                         <div class="value" id="statPopulation">0</div>
                         <div class="sub" id="statPopGrowth">+0 / day</div>
                     </div>
                     <div class="stat-card clickable" onclick="showModal('gold')">
-                        <div class="label">💰 Gold</div>
+                        <div class="label"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.2"/><path d="M8 4v8M5 6.5h4.5a1.5 1.5 0 010 3H5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg> Gold</div>
                         <div class="value" id="statGold">0</div>
                         <div class="sub" id="statGoldIncome">+0 / day</div>
                     </div>
                     <div class="stat-card clickable" onclick="showModal('military')">
-                        <div class="label">⚔️ Military</div>
+                        <div class="label"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1v14M4 5l4 3 4-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 13h12" stroke="currentColor" stroke-width="1.2"/></svg> Military</div>
                         <div class="value" id="statMilitary">0</div>
                         <div class="sub" id="statArmyDetail">0 troops</div>
                     </div>
                     <div class="stat-card clickable" onclick="showModal('honor')">
-                        <div class="label">👑 Honor</div>
+                        <div class="label"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1l2 3h3l-2 3 2 3h-3l-2 3-2-3H5l2-3-2-3h3L8 1z" stroke="currentColor" stroke-width="1.2" fill="none"/></svg> Honor</div>
                         <div class="value" id="statHonor">0</div>
                         <div class="sub" id="statRank">Peasant</div>
                     </div>
                 </div>
 
-                <div class="section-title"><h2>🏘️ My Estates</h2><a onclick="switchPage('buildings')">Manage →</a></div>
+                <div class="section-title"><h2><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 16V6l6-5 6 5v10H3z" stroke="#e6b800" stroke-width="1.2" fill="none"/><path d="M7 16v-5h4v5" stroke="#e6b800" stroke-width="1.2"/></svg> My Estates</h2><a onclick="switchPage('buildings')">Manage →</a></div>
                 <div class="village-grid" id="villageGrid"></div>
 
-                <div class="section-title" style="margin-top:20px;"><h2>📜 Recent Activity</h2><a onclick="document.getElementById('activityList').innerHTML = ''">Clear</a></div>
+                <div class="section-title" style="margin-top:20px;"><h2><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="3" width="14" height="12" rx="1" stroke="#e6b800" stroke-width="1.2"/><path d="M5 7h8M5 10h6M5 13h4" stroke="#e6b800" stroke-width="0.8"/></svg> Recent Activity</h2><a onclick="document.getElementById('activityList').innerHTML = ''">Clear</a></div>
                 <div class="activity-list" id="activityList">
-                    <div class="activity-item"><span>🏰</span> Welcome to Stronghold Kingdoms! Begin building your empire.</div>
+                    <div class="activity-item"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="5" width="12" height="8" rx="1" stroke="#e6b800" stroke-width="1"/><path d="M7 5V3M4 3h6" stroke="#e6b800" stroke-width="1.2" stroke-linecap="round"/></svg> Welcome to Stronghold Kingdoms! Begin building your empire.</div>
                 </div>
             </div>
 
             <!-- MAP -->
             <div class="page" id="page-map">
-                <div class="section-title"><h2>🗺️ World Map — Kingmaker 4</h2><a onclick="claimRandomTile()">Find Territory</a></div>
+                <div class="section-title"><h2><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 5l5-2 4 2 5-2v10l-5 2-4-2-5 2V5z" stroke="#e6b800" stroke-width="1.2" fill="none"/><path d="M7 3v10M11 5v10" stroke="#e6b800" stroke-width="0.8" opacity="0.5"/></svg> World Map — Kingmaker 4</h2><a onclick="claimRandomTile()"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="#e6b800" stroke-width="1.5"/></svg> Find Territory</a></div>
                 <div style="background:#141b24; border-radius:12px; padding:20px; text-align:center;">
                     <div class="map-grid" id="worldMap"></div>
                     <p style="color:#6a7a8a; margin-top:12px; font-size:13px;">
-                        🟩 Yours: <span id="ownedTiles">0</span> &nbsp;·&nbsp;
-                        🟥 Enemy: <span id="enemyTiles">0</span> &nbsp;·&nbsp;
-                        ⬛ Unclaimed: <span id="unclaimedTiles">0</span>
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="#1a3a1a" style="display:inline"><rect width="12" height="12" rx="2" fill="#1a3a1a" stroke="#e6b800" stroke-width="1"/></svg> Yours: <span id="ownedTiles">0</span> &nbsp;·&nbsp;
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="#3a1a1a" style="display:inline"><rect width="12" height="12" rx="2" fill="#3a1a1a" stroke="#cc3333" stroke-width="1"/></svg> Enemy: <span id="enemyTiles">0</span> &nbsp;·&nbsp;
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="#1a1a1a" style="display:inline"><rect width="12" height="12" rx="2" fill="#1a1a1a" stroke="#333" stroke-width="1"/></svg> Unclaimed: <span id="unclaimedTiles">0</span>
                     </p>
-                    <button class="btn btn-primary" onclick="claimRandomTile()" style="margin-top:8px;">⚔️ Claim New Territory</button>
+                    <button class="btn btn-primary" onclick="claimRandomTile()" style="margin-top:8px;">
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="#0a0e14" stroke-width="1.5"/></svg> Claim New Territory</button>
                 </div>
-                <div class="section-title" style="margin-top:20px;"><h2>⚔️ Recent Battles</h2></div>
-                <div class="activity-list" id="battleList"><div class="activity-item"><span>📋</span> No battles yet. Claim territory to start!</div></div>
+                <div class="section-title" style="margin-top:20px;"><h2><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 1v16M5 5l4 4 4-4" stroke="#e6b800" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 15h12" stroke="#e6b800" stroke-width="1.2"/></svg> Recent Battles</h2></div>
+                <div class="activity-list" id="battleList">
+                    <div class="activity-item"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="12" height="12" rx="1" stroke="#6a7a8a" stroke-width="1"/><line x1="4" y1="4" x2="10" y2="10" stroke="#6a7a8a" stroke-width="1"/><line x1="10" y1="4" x2="4" y2="10" stroke="#6a7a8a" stroke-width="1"/></svg> No battles yet. Claim territory to start!</div>
+                </div>
             </div>
 
             <!-- MILITARY -->
             <div class="page" id="page-military">
-                <div class="section-title"><h2>⚔️ My Army</h2><a onclick="autoRecruit()">Auto-Recruit</a></div>
+                <div class="section-title"><h2><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 1v16M5 5l4 4 4-4" stroke="#e6b800" stroke-width="1.2" stroke-linecap="round"/><path d="M3 15h12" stroke="#e6b800" stroke-width="1.2"/></svg> My Army</h2><a onclick="autoRecruit()"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#e6b800" stroke-width="1"/><path d="M7 4v6M4 7h6" stroke="#e6b800" stroke-width="1.2"/></svg> Auto-Recruit</a></div>
                 <div class="army-grid" id="armyGrid"></div>
-                <div class="section-title" style="margin-top:20px;"><h2>🎯 Attack</h2><a onclick="autoBattle()">Auto-Attack Nearest</a></div>
+                <div class="section-title" style="margin-top:20px;"><h2><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 1v16M5 5l4 4 4-4" stroke="#cc3333" stroke-width="1.2" stroke-linecap="round"/><path d="M3 15h12" stroke="#cc3333" stroke-width="1.2"/></svg> Attack</h2><a onclick="autoBattle()">Auto-Attack Nearest</a></div>
                 <div style="background:#141b24; border-radius:12px; padding:16px;">
                     <p style="color:#8a9ba8; font-size:13px;">Select an enemy tile on the map, or click Auto-Attack to engage the nearest enemy territory.</p>
-                    <div class="battle-log" id="battleLog"><div class="info">⚔️ Ready for battle!</div></div>
-                    <button class="btn btn-danger" onclick="autoBattle()" style="margin-top:8px;">⚔️ Attack!</button>
+                    <div class="battle-log" id="battleLog"><div class="info"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" style="display:inline"><path d="M6 1v10M3 4l3 3 3-3" stroke="#8a9ba8" stroke-width="1" stroke-linecap="round"/></svg> Ready for battle!</div></div>
+                    <button class="btn btn-danger" onclick="autoBattle()" style="margin-top:8px;">
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M3 5l4 4 4-4" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/></svg> Attack!
+                    </button>
                 </div>
             </div>
 
             <!-- BUILDINGS -->
             <div class="page" id="page-buildings">
-                <div class="section-title"><h2>🏗️ Construct / Upgrade</h2><a onclick="addLog('📖 Opened the building blueprint library')">Blueprints</a></div>
+                <div class="section-title"><h2><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 16V6l6-5 6 5v10H3z" stroke="#e6b800" stroke-width="1.2" fill="none"/><path d="M7 16v-5h4v5" stroke="#e6b800" stroke-width="1.2"/><line x1="1" y1="16" x2="17" y2="16" stroke="#e6b800" stroke-width="1.2"/></svg> Construct / Upgrade</h2></div>
                 <div class="build-grid" id="buildGrid"></div>
             </div>
 
             <!-- RESEARCH -->
             <div class="page" id="page-research">
-                <div class="section-title"><h2>📜 Research Technology</h2><a onclick="addLog('🔬 Research project initiated')">Auto-Research</a></div>
+                <div class="section-title"><h2><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="8" cy="8" r="6" stroke="#e6b800" stroke-width="1.2"/><path d="M13 13l4 4" stroke="#e6b800" stroke-width="1.5" stroke-linecap="round"/></svg> Research Technology</h2></div>
                 <div class="tech-grid" id="techGrid"></div>
             </div>
         </div>
@@ -328,25 +328,59 @@
 
 <script>
 // ============================================================
+// SVG ICON HELPERS
+// ============================================================
+const S = (w,h,inner) => `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" fill="none" style="display:inline;vertical-align:middle">${inner}</svg>`;
+const ICONS = {
+    castle:      S(18,18,'<rect x="2" y="6" width="14" height="10" rx="1.5" stroke="#e6b800" stroke-width="1.2" fill="none"/><path d="M9 6V3M6 3h6" stroke="#e6b800" stroke-width="1.5" stroke-linecap="round"/><path d="M4 10h3v4H4z" fill="#e6b800" opacity="0.3"/><path d="M11 9h3v5h-3z" fill="#e6b800" opacity="0.3"/>'),
+    wheat:       S(18,18,'<path d="M9 2v10M6 5l3 3 3-3M6 8l3 3 3-3" stroke="#e6b800" stroke-width="1.2" stroke-linecap="round"/><path d="M4 14h10l-1 2H5z" fill="#e6b800" opacity="0.4"/>'),
+    lumber:      S(18,18,'<rect x="6" y="2" width="3" height="10" rx="1" fill="#8a6a3a" opacity="0.6"/><circle cx="7" cy="4" r="2" fill="#4a7a3a" opacity="0.6"/><circle cx="7" cy="6" r="1.5" fill="#4a7a3a" opacity="0.6"/><circle cx="8" cy="3" r="1.5" fill="#4a7a3a" opacity="0.6"/><path d="M4 14h10" stroke="#e6b800" stroke-width="1.2"/>'),
+    quarry:      S(18,18,'<rect x="4" y="8" width="10" height="6" rx="1" fill="#6a6a6a" opacity="0.4" stroke="#aaa" stroke-width="0.8"/><path d="M6 8V5h6v3" stroke="#e6b800" stroke-width="1.2"/><path d="M7 10h4v2H7z" fill="#aaa" opacity="0.3"/>'),
+    market:      S(18,18,'<rect x="3" y="5" width="12" height="9" rx="2" stroke="#e6b800" stroke-width="1.2" fill="none"/><path d="M7 5V3h4v2" stroke="#e6b800" stroke-width="1" stroke-linecap="round"/><path d="M5 9h8M5 11h6" stroke="#e6b800" stroke-width="0.8"/>'),
+    barracks:    S(18,18,'<rect x="3" y="5" width="12" height="9" rx="1" stroke="#e6b800" stroke-width="1.2" fill="none"/><path d="M9 2v3" stroke="#e6b800" stroke-width="1.2"/><path d="M6 8l3 2 3-2" stroke="#e6b800" stroke-width="1" stroke-linecap="round"/>'),
+    wall:        S(18,18,'<rect x="2" y="6" width="3" height="8" rx="0.5" fill="#6a6a6a" opacity="0.5"/><rect x="7" y="4" width="3" height="10" rx="0.5" fill="#6a6a6a" opacity="0.6"/><rect x="12" y="6" width="3" height="8" rx="0.5" fill="#6a6a6a" opacity="0.5"/><path d="M2 14h14" stroke="#e6b800" stroke-width="0.8"/>'),
+    church:      S(18,18,'<path d="M9 2l6 5H3l6-5z" fill="#e6b800" opacity="0.3" stroke="#e6b800" stroke-width="0.8"/><rect x="6" y="7" width="6" height="7" fill="none" stroke="#e6b800" stroke-width="1"/><path d="M8 10h2v4H8z" fill="#e6b800" opacity="0.4"/><line x1="9" y1="7" x2="9" y2="8" stroke="#e6b800" stroke-width="1"/>'),
+    swordsman:   S(22,22,'<circle cx="11" cy="7" r="3" stroke="#c8c8c8" stroke-width="1.2" fill="none"/><path d="M8 11h6l2 8h-3l-1-3-1 3H8l2-8z" fill="#6a6a6a" opacity="0.5" stroke="#c8c8c8" stroke-width="0.8"/>'),
+    archer:      S(22,22,'<circle cx="11" cy="7" r="3" stroke="#c8c8c8" stroke-width="1.2" fill="none"/><path d="M9 11l-2 3h3l-1 5 2-1 1-4h3l-2-3H9z" fill="#6a6a6a" opacity="0.5" stroke="#c8c8c8" stroke-width="0.8"/>'),
+    knight:      S(22,22,'<circle cx="11" cy="6" r="3" stroke="#e6b800" stroke-width="1.2" fill="none"/><path d="M6 16l2-5h6l2 5H6z" fill="#6a6a6a" opacity="0.5" stroke="#e6b800" stroke-width="0.8"/><path d="M8 11h6" stroke="#c8c8c8" stroke-width="1"/>'),
+    siege:       S(22,22,'<rect x="5" y="8" width="12" height="4" rx="1" fill="#6a6a6a" opacity="0.5" stroke="#c8c8c8" stroke-width="0.8"/><circle cx="7" cy="14" r="2" fill="none" stroke="#c8c8c8" stroke-width="1"/><line x1="15" y1="8" x2="15" y2="14" stroke="#c8c8c8" stroke-width="1.2"/>'),
+    gold:        S(14,14,'<circle cx="7" cy="7" r="5.5" stroke="#e6b800" stroke-width="1.2"/><path d="M7 4v6M5 5.5h3.5a1.5 1.5 0 010 3H5" stroke="#e6b800" stroke-width="1" stroke-linecap="round"/>'),
+    wood:        S(14,14,'<rect x="5" y="2" width="2.5" height="8" rx="0.8" fill="#8a6a3a" opacity="0.6"/><circle cx="6" cy="3.5" r="1.5" fill="#4a7a3a" opacity="0.6"/><path d="M3 12h8" stroke="#e6b800" stroke-width="0.8"/>'),
+    food:        S(14,14,'<path d="M7 2v8M4 5l3 3 3-3M4 8l3 3 3-3" stroke="#e6b800" stroke-width="1" stroke-linecap="round"/><path d="M2 12h10" stroke="#e6b800" stroke-width="0.8"/>'),
+    stone:       S(14,14,'<rect x="3" y="6" width="8" height="5" rx="0.8" fill="#6a6a6a" opacity="0.4" stroke="#aaa" stroke-width="0.6"/><path d="M5 6V4h4v2" stroke="#e6b800" stroke-width="1"/>'),
+    check:       S(16,16,'<path d="M4 8l3 3 5-5" stroke="#4caf50" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>'),
+    cross:       S(16,16,'<path d="M4 4l8 8M12 4l-8 8" stroke="#f44336" stroke-width="1.5"/>'),
+    sword:       S(16,16,'<path d="M8 1v12M5 5l3 3 3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M3 14h10" stroke="currentColor" stroke-width="1.2"/>'),
+    crown:       S(16,16,'<path d="M8 2l2 3h4l-2 4 2 3H2l2-3-2-4h4L8 2z" stroke="#e6b800" stroke-width="1.2" fill="none"/>'),
+    people:      S(16,16,'<circle cx="6" cy="5" r="3" stroke="currentColor" stroke-width="1.2"/><circle cx="12" cy="6" r="2" stroke="currentColor" stroke-width="1.2"/><path d="M1 14c0-3 2-5 5-5s5 2 5 5M9 14c0-2 1.5-4 3-4s3 2 3 4" stroke="currentColor" stroke-width="1.2"/>'),
+    map:         S(16,16,'<path d="M1 4l5-2 4 2 5-2v10l-5 2-4-2-5 2V4z" stroke="currentColor" stroke-width="1.2" fill="none"/><path d="M6 2v10M10 4v10" stroke="currentColor" stroke-width="0.8" opacity="0.5"/>'),
+    trophy:      S(16,16,'<path d="M4 3V1h8v2" stroke="currentColor" stroke-width="1.2"/><rect x="2" y="3" width="12" height="4" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M8 7v4M5 14l3-3 3 3" stroke="currentColor" stroke-width="1.2"/>'),
+    news:        S(16,16,'<rect x="2" y="2" width="12" height="12" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M5 6h6M5 9h4M5 12h6" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>'),
+    research:    S(16,16,'<circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.2"/><path d="M11 11l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>'),
+    handshake:   S(16,16,'<path d="M4 11l4-3 4 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><circle cx="4" cy="6" r="2" stroke="currentColor" stroke-width="1.2"/><circle cx="12" cy="6" r="2" stroke="currentColor" stroke-width="1.2"/><path d="M8 8a2 2 0 100-4 2 2 0 000 4z" fill="currentColor" opacity="0.3"/>'),
+    home:        S(16,16,'<path d="M2 14V5l6-4 6 4v9H2z" stroke="currentColor" stroke-width="1.2" fill="none"/><path d="M6 14V9h4v5" stroke="currentColor" stroke-width="1.2"/>'),
+    grid:        S(16,16,'<rect x="2" y="2" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="9" y="2" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="2" y="9" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="9" y="9" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/>'),
+    castleIcon:  S(28,28,'<rect x="2" y="10" width="24" height="16" rx="2" stroke="#e6b800" stroke-width="1.5"/><path d="M14 10V6" stroke="#e6b800" stroke-width="2"/><path d="M8 6h12" stroke="#e6b800" stroke-width="2" stroke-linecap="round"/><path d="M7 15h3v5H7z" fill="#e6b800" opacity="0.4"/><path d="M12 14h4v6h-4z" fill="#e6b800" opacity="0.6"/><path d="M18 16h3v4h-3z" fill="#e6b800" opacity="0.4"/>'),
+};
+
+const BUILDING_ICONS = { keep: 'castle', farm: 'wheat', lumber: 'lumber', quarry: 'quarry', market: 'market', barracks: 'barracks', wall: 'wall', church: 'church' };
+
+// ============================================================
 // GAME STATE
 // ============================================================
 const state = {
-    gold: 1200,
-    food: 800,
-    wood: 600,
-    stone: 400,
-    population: 320,
-    honor: 100,
+    gold: 1200, food: 800, wood: 600, stone: 400,
+    population: 320, honor: 100,
     military: { swordsmen: 12, archers: 5, knights: 2, siege: 0 },
     buildings: {
-        keep: { level: 1, name: 'Keep', icon: '🏰', desc: 'Castle center', maxLevel: 10 },
-        farm: { level: 2, name: 'Farm', icon: '🌾', desc: 'Produces food', maxLevel: 10 },
-        lumber: { level: 2, name: 'Lumber Mill', icon: '🪵', desc: 'Produces wood', maxLevel: 10 },
-        quarry: { level: 1, name: 'Quarry', icon: '🪨', desc: 'Produces stone', maxLevel: 10 },
-        market: { level: 1, name: 'Market', icon: '🏪', desc: 'Generates gold', maxLevel: 10 },
-        barracks: { level: 1, name: 'Barracks', icon: '⚔️', desc: 'Trains troops', maxLevel: 10 },
-        wall: { level: 1, name: 'Walls', icon: '🧱', desc: 'Defense', maxLevel: 10 },
-        church: { level: 0, name: 'Church', icon: '⛪', desc: 'Generates honor', maxLevel: 5 },
+        keep: { level: 1, name: 'Keep', desc: 'Castle center', maxLevel: 10 },
+        farm: { level: 2, name: 'Farm', desc: 'Produces food', maxLevel: 10 },
+        lumber: { level: 2, name: 'Lumber Mill', desc: 'Produces wood', maxLevel: 10 },
+        quarry: { level: 1, name: 'Quarry', desc: 'Produces stone', maxLevel: 10 },
+        market: { level: 1, name: 'Market', desc: 'Generates gold', maxLevel: 10 },
+        barracks: { level: 1, name: 'Barracks', desc: 'Trains troops', maxLevel: 10 },
+        wall: { level: 1, name: 'Walls', desc: 'Defense', maxLevel: 10 },
+        church: { level: 0, name: 'Church', desc: 'Generates honor', maxLevel: 5 },
     },
     research: {
         farming: { level: 0, name: 'Farming', desc: '+20% food output', maxLevel: 5 },
@@ -356,10 +390,7 @@ const state = {
         warfare: { level: 0, name: 'Warfare', desc: 'Stronger troops', maxLevel: 5 },
         diplomacy: { level: 1, name: 'Diplomacy', desc: 'Faster honor gain', maxLevel: 5 },
     },
-    tiles: [],
-    activityLog: [],
-    battleLog: [],
-    tickInterval: null,
+    tiles: [], activityLog: [], battleLog: [], tickInterval: null,
 };
 
 // ============================================================
@@ -368,52 +399,40 @@ const state = {
 function init() {
     generateMap();
     renderAll();
-    if (!state.tickInterval) {
-        state.tickInterval = setInterval(gameTick, 3000);
-    }
-    addLog('🎮 Your kingdom has been established. Build and conquer!');
+    if (!state.tickInterval) state.tickInterval = setInterval(gameTick, 3000);
+    addLog('Your kingdom has been established. Build and conquer!');
 }
 
 // ============================================================
 // MAP
 // ============================================================
 function generateMap() {
-    const tiles = [];
     const total = 50;
-    // Player starts with 2 owned tiles
-    for (let i = 0; i < total; i++) {
+    state.tiles = Array.from({length: total}, (_, i) => {
         const r = Math.random();
-        let owner;
-        if (i < 2) owner = 'player';
-        else if (r < 0.25) owner = 'enemy';
-        else owner = 'unclaimed';
-        const type = ['plains','forest','mountain','water','swamp'][Math.floor(Math.random()*5)];
-        const defence = Math.floor(Math.random() * 30) + 5;
-        tiles.push({ id: i, owner, type, defence, army: owner === 'enemy' ? Math.floor(Math.random()*40)+10 : 0 });
-    }
-    state.tiles = tiles;
+        return {
+            id: i,
+            owner: i < 2 ? 'player' : r < 0.25 ? 'enemy' : 'unclaimed',
+            type: ['plains','forest','mountain','water','swamp'][Math.floor(Math.random()*5)],
+            defence: Math.floor(Math.random() * 30) + 5,
+            army: null
+        };
+    });
+    state.tiles.forEach(t => { if (t.owner === 'enemy') t.army = Math.floor(Math.random()*40)+10; });
 }
 
 function renderMap() {
     const el = document.getElementById('worldMap');
     if (!el) return;
-    const tiles = state.tiles;
-    el.innerHTML = tiles.map((t, i) => {
-        let color, icon;
-        if (t.owner === 'player') { color = '#1a2a1a'; icon = '🟩'; }
-        else if (t.owner === 'enemy') { color = '#2a1a1a'; icon = '🟥'; }
-        else { color = '#1a1a1a'; icon = '⬛'; }
-        let terrain = '';
-        if (t.type === 'forest') terrain = '🌲';
-        else if (t.type === 'mountain') terrain = '⛰️';
-        else if (t.type === 'water') terrain = '🌊';
-        else if (t.type === 'swamp') terrain = '🌿';
-        return `<div class="map-tile" style="background:${color}" onclick="clickTile(${i})" title="Tile ${i+1} - ${t.type.toUpperCase()} (Def: ${t.defence})">${t.owner === 'player' ? '🏰' : t.owner === 'enemy' ? '⚔️' : terrain}</div>`;
+    el.innerHTML = state.tiles.map((t, i) => {
+        const bg = t.owner === 'player' ? '#1a3a1a' : t.owner === 'enemy' ? '#3a1a1a' : '#1a1a1a';
+        const icon = t.owner === 'player'
+            ? '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="4" width="12" height="8" rx="1" stroke="#e6b800" stroke-width="1"/><path d="M7 4V2M5 2h4" stroke="#e6b800" stroke-width="1.2" stroke-linecap="round"/></svg>'
+            : t.owner === 'enemy'
+            ? '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M3 5l4 4 4-4" stroke="#cc3333" stroke-width="1.2" stroke-linecap="round"/><path d="M2 13h10" stroke="#cc3333" stroke-width="1.2"/></svg>'
+            : '';
+        return `<div class="map-tile" style="background:${bg}" onclick="clickTile(${i})" title="Tile ${i+1} - ${t.type.toUpperCase()}">${icon}</div>`;
     }).join('');
-    updateCounts();
-}
-
-function updateCounts() {
     const own = state.tiles.filter(t => t.owner === 'player').length;
     const en = state.tiles.filter(t => t.owner === 'enemy').length;
     const un = state.tiles.filter(t => t.owner === 'unclaimed').length;
@@ -424,92 +443,68 @@ function updateCounts() {
 
 function clickTile(i) {
     const t = state.tiles[i];
-    if (t.owner === 'player') {
-        showModal('territory', `🏰 Your Territory\nTile ${i+1} (${t.type.toUpperCase()})\nDefense: ${t.defence}\nThis land is secure under your rule.`);
-    } else if (t.owner === 'enemy') {
-        showModal('battle', `⚔️ Enemy Territory\nTile ${i+1} (${t.type.toUpperCase()})\nEnemy Army: ${t.army} troops\nDefense Bonus: ${t.defence}%\n\nAttack this territory?`,
-            () => battleTile(i));
-    } else {
-        showModal('claim', `⬛ Unclaimed Land\nTile ${i+1} (${t.type.toUpperCase()})\nClaim this territory?`,
-            () => claimTile(i));
-    }
+    if (t.owner === 'player') showModal('info', null, `<h2>Your Territory (Tile ${i+1})</h2><p>Type: ${t.type}<br>Defense: ${t.defence}<br>Status: Secure</p>`);
+    else if (t.owner === 'enemy') showModal('battle', null, `<h2>Enemy Territory (Tile ${i+1})</h2><p>Type: ${t.type}<br>Defense: ${t.defence}<br>Enemy Army: ${t.army}</p>`, () => battleTile(i));
+    else showModal('confirm', null, `<h2>Unclaimed Land (Tile ${i+1})</h2><p>Type: ${t.type}<br>Cost: 100 gold</p>`, () => claimTile(i));
 }
 
 function claimTile(i) {
     const t = state.tiles[i];
     if (t.owner !== 'unclaimed') return toast('Already claimed!');
-    const cost = 100;
-    if (state.gold < cost) return toast(`❌ Need ${cost} gold!`);
-    state.gold -= cost;
-    t.owner = 'player';
-    t.defence += 5;
-    renderMap();
-    renderStats();
-    addLog(`🏴 Claimed territory ${i+1} (${t.type})`);
-    toast(`✅ Territory ${i+1} claimed!`);
-    updateCounts();
+    if (state.gold < 100) return toast('Need 100 gold!');
+    state.gold -= 100; t.owner = 'player'; t.defence += 5;
+    renderMap(); renderStats();
+    addLog(`Claimed territory ${i+1} (${t.type})`);
+    toast('Territory claimed!');
 }
 
 function claimRandomTile() {
     const unclaimed = state.tiles.filter(t => t.owner === 'unclaimed');
-    if (!unclaimed.length) return toast('❌ No unclaimed territories!');
-    const t = unclaimed[Math.floor(Math.random() * unclaimed.length)];
-    claimTile(state.tiles.indexOf(t));
+    if (!unclaimed.length) return toast('No unclaimed territories!');
+    claimTile(state.tiles.indexOf(unclaimed[Math.floor(Math.random() * unclaimed.length)]));
 }
 
 function battleTile(i) {
     const t = state.tiles[i];
     if (t.owner !== 'enemy') return;
     const myPower = state.military.swordsmen * 3 + state.military.archers * 4 + state.military.knights * 10 + state.military.siege * 15;
-    if (myPower === 0) return toast('❌ No troops to attack!');
+    if (myPower === 0) return toast('No troops to attack!');
     const enemyPower = t.army * (1 + t.defence / 100);
-    const odds = myPower / (myPower + enemyPower);
-    const roll = Math.random();
+    const win = Math.random() < (myPower / (myPower + enemyPower)) * 1.1;
     const log = document.getElementById('battleLog');
-    const win = roll < odds * 1.1;
-    const msg = win ? `🏆 VICTORY! Captured tile ${i+1}! (${Math.round(odds*100)}% odds)` : `💀 DEFEATED at tile ${i+1}. Army decimated.`;
-    const cls = win ? 'win' : 'lose';
-    log.innerHTML = `<div class="${cls}">${msg}</div>` + log.innerHTML;
-    state.battleLog.push(msg);
-
     if (win) {
         t.owner = 'player';
         const loot = Math.floor(Math.random() * 200) + 50;
         state.gold += loot;
-        addLog(`🏆 Victorious! Captured tile ${i+1}. Looted ${loot} gold.`);
-        toast(`🏆 Victory! +${loot} gold`);
-        // Lose some troops
+        log.innerHTML = `<div class="win">VICTORY! Captured tile ${i+1}! (+${loot} gold)</div>` + log.innerHTML;
+        addLog(`Victory! Captured tile ${i+1}. Looted ${loot} gold.`);
+        toast('Victory!');
         const losses = Math.floor(Math.random() * 0.4 * (state.military.swordsmen + state.military.archers + state.military.knights));
         loseTroops(losses);
     } else {
         const losses = Math.floor(Math.random() * 0.6 * (state.military.swordsmen + state.military.archers + state.military.knights)) + 3;
         loseTroops(losses);
-        addLog(`💀 Defeated at tile ${i+1}. Lost ${losses} troops.`);
-        toast(`💀 Defeated! Lost ${losses} troops`);
+        log.innerHTML = `<div class="lose">DEFEATED at tile ${i+1}. Lost ${losses} troops.</div>` + log.innerHTML;
+        addLog(`Defeated at tile ${i+1}. Lost ${losses} troops.`);
+        toast('Defeated!');
     }
-    renderMap();
-    renderAll();
+    renderMap(); renderAll();
 }
 
 function autoBattle() {
-    const enemies = state.tiles.filter(t => t.owner === 'enemy');
-    if (!enemies.length) return toast('❌ No enemies nearby!');
-    // Attack the weakest
-    enemies.sort((a, b) => a.army - b.army);
-    const idx = state.tiles.indexOf(enemies[0]);
-    battleTile(idx);
+    const enemies = state.tiles.filter(t => t.owner === 'enemy').sort((a, b) => a.army - b.army);
+    if (!enemies.length) return toast('No enemies nearby!');
+    battleTile(state.tiles.indexOf(enemies[0]));
 }
 
 function loseTroops(n) {
-    let remaining = n;
-    for (const type of ['knights', 'swordsmen', 'archers', 'siege']) {
-        if (remaining <= 0) break;
-        const take = Math.min(state.military[type], remaining);
-        state.military[type] -= take;
-        remaining -= take;
+    let r = n;
+    for (const t of ['knights','swordsmen','archers','siege']) {
+        if (r <= 0) break;
+        const take = Math.min(state.military[t], r);
+        state.military[t] -= take; r -= take;
     }
-    renderArmy();
-    renderStats();
+    renderArmy(); renderStats();
 }
 
 // ============================================================
@@ -519,35 +514,27 @@ function renderBuildings() {
     const el = document.getElementById('buildGrid');
     if (!el) return;
     el.innerHTML = Object.entries(state.buildings).map(([key, b]) => {
-        const cost = getUpgradeCost(key, b.level);
-        const canAfford = state.gold >= cost.gold && state.wood >= cost.wood && state.stone >= cost.stone;
+        const cost = { gold: 80*(b.level+1), wood: 40*(b.level+1), stone: 30*(b.level+1) };
         const maxed = b.level >= b.maxLevel;
+        const iconKey = BUILDING_ICONS[key];
         return `<div class="build-card" onclick="${maxed ? '' : `upgradeBuilding('${key}')`}" title="${b.desc}">
-            <div class="icon">${b.icon}</div>
+            <div class="icon">${ICONS[iconKey]}</div>
             <h4>${b.name}</h4>
-            <div class="level">Level ${b.level}${maxed ? ' ⭐ MAX' : ''}</div>
-            ${maxed ? '' : `<div class="cost">💰${cost.gold} 🪵${cost.wood} 🪨${cost.stone}</div>`}
+            <div class="level">Level ${b.level}${maxed ? ' MAX' : ''}</div>
+            ${maxed ? '' : `<div class="cost">${ICONS.gold}${cost.gold} ${ICONS.wood}${cost.wood} ${ICONS.stone}${cost.stone}</div>`}
         </div>`;
     }).join('');
 }
 
-function getUpgradeCost(key, level) {
-    const mult = level + 1;
-    return { gold: 80 * mult, wood: 40 * mult, stone: 30 * mult };
-}
-
 function upgradeBuilding(key) {
     const b = state.buildings[key];
-    if (b.level >= b.maxLevel) return toast('⭐ Already max level!');
-    const cost = getUpgradeCost(key, b.level);
-    if (state.gold < cost.gold || state.wood < cost.wood || state.stone < cost.stone)
-        return toast('❌ Not enough resources!');
-    state.gold -= cost.gold;
-    state.wood -= cost.wood;
-    state.stone -= cost.stone;
+    if (b.level >= b.maxLevel) return toast('Already max level!');
+    const cost = { gold: 80*(b.level+1), wood: 40*(b.level+1), stone: 30*(b.level+1) };
+    if (state.gold < cost.gold || state.wood < cost.wood || state.stone < cost.stone) return toast('Not enough resources!');
+    state.gold -= cost.gold; state.wood -= cost.wood; state.stone -= cost.stone;
     b.level++;
-    addLog(`🏗️ Upgraded ${b.name} to Level ${b.level}`);
-    toast(`✅ ${b.name} → Level ${b.level}`);
+    addLog(`Upgraded ${b.name} to Level ${b.level}`);
+    toast(`${b.name} → Level ${b.level}`);
     renderAll();
 }
 
@@ -555,50 +542,41 @@ function upgradeBuilding(key) {
 // ARMY
 // ============================================================
 const UNIT_TYPES = [
-    { key: 'swordsmen', name: 'Swordsmen', icon: '⚔️', cost: { gold: 30, food: 20 } },
-    { key: 'archers', name: 'Archers', icon: '🏹', cost: { gold: 40, food: 15 } },
-    { key: 'knights', name: 'Knights', icon: '🐴', cost: { gold: 80, food: 30 } },
-    { key: 'siege', name: 'Siege', icon: '💣', cost: { gold: 150, food: 40 } },
+    { key: 'swordsmen', name: 'Swordsmen', iconKey: 'swordsman', cost: { gold: 30, food: 20 } },
+    { key: 'archers', name: 'Archers', iconKey: 'archer', cost: { gold: 40, food: 15 } },
+    { key: 'knights', name: 'Knights', iconKey: 'knight', cost: { gold: 80, food: 30 } },
+    { key: 'siege', name: 'Siege', iconKey: 'siege', cost: { gold: 150, food: 40 } },
 ];
 
 function renderArmy() {
     const el = document.getElementById('armyGrid');
     if (!el) return;
+    const total = Object.values(state.military).reduce((a,b) => a+b, 0);
+    document.getElementById('armyCount').textContent = total;
     el.innerHTML = UNIT_TYPES.map(u => {
         const count = state.military[u.key];
-        const canAfford = state.gold >= u.cost.gold && state.food >= u.cost.food;
-        return `<div class="unit-card" onclick="recruitUnit('${u.key}')" title="Recruit: 💰${u.cost.gold} 🌾${u.cost.food}">
-            <div class="icon">${u.icon}</div>
+        return `<div class="unit-card" onclick="recruitUnit('${u.key}')" title="Recruit: ${u.cost.gold} gold / ${u.cost.food} food">
+            <div class="icon">${ICONS[u.iconKey]}</div>
             <div class="count">${count}</div>
             <div class="name">${u.name}</div>
-            <div style="font-size:10px;color:#6a7a8a;margin-top:4px;">💰${u.cost.gold} 🌾${u.cost.food}</div>
+            <div style="font-size:10px;color:#6a7a8a;margin-top:4px;">${ICONS.gold}${u.cost.gold} ${ICONS.food}${u.cost.food}</div>
         </div>`;
     }).join('');
-    updateArmyCount();
-}
-
-function updateArmyCount() {
-    const total = Object.values(state.military).reduce((a, b) => a + b, 0);
-    const el = document.getElementById('armyCount');
-    if (el) el.textContent = total;
 }
 
 function recruitUnit(key) {
     const u = UNIT_TYPES.find(x => x.key === key);
-    if (!u) return;
-    if (state.gold < u.cost.gold || state.food < u.cost.food) return toast('❌ Not enough resources!');
-    state.gold -= u.cost.gold;
-    state.food -= u.cost.food;
-    state.military[key] = (state.military[key] || 0) + 1;
-    addLog(`🎯 Recruited 1 ${u.name}`);
-    toast(`✅ 1 ${u.name} recruited!`);
+    if (!u || state.gold < u.cost.gold || state.food < u.cost.food) return toast('Not enough resources!');
+    state.gold -= u.cost.gold; state.food -= u.cost.food;
+    state.military[key]++;
+    addLog(`Recruited 1 ${u.name}`);
+    toast(`${u.name} recruited!`);
     renderAll();
 }
 
 function autoRecruit() {
-    const affordable = UNIT_TYPES.filter(u => state.gold >= u.cost.gold && state.food >= u.cost.food);
-    if (!affordable.length) return toast('❌ Not enough resources to recruit!');
-    const u = affordable[Math.floor(Math.random() * affordable.length)];
+    const u = UNIT_TYPES.find(u => state.gold >= u.cost.gold && state.food >= u.cost.food);
+    if (!u) return toast('Not enough resources!');
     recruitUnit(u.key);
 }
 
@@ -611,26 +589,24 @@ function renderResearch() {
     el.innerHTML = Object.entries(state.research).map(([key, r]) => {
         const maxed = r.level >= r.maxLevel;
         const cost = 100 * (r.level + 1);
-        const canAfford = state.gold >= cost;
         const pct = (r.level / r.maxLevel) * 100;
         return `<div class="tech-card" onclick="${maxed ? '' : `doResearch('${key}')`}">
-            <div class="name">${r.name} ${maxed ? '⭐' : `(${r.level}/${r.maxLevel})`}</div>
+            <div class="name">${ICONS.research} ${r.name} ${maxed ? 'MAX' : `(${r.level}/${r.maxLevel})`}</div>
             <div class="desc">${r.desc}</div>
             <div class="progress"><div class="bar" style="width:${pct}%"></div></div>
-            ${maxed ? '' : `<div style="color:#6a7a8a;font-size:11px;margin-top:4px;">💰${cost}</div>`}
+            ${maxed ? '' : `<div style="color:#6a7a8a;font-size:11px;margin-top:4px;">${ICONS.gold}${cost}</div>`}
         </div>`;
     }).join('');
 }
 
 function doResearch(key) {
     const r = state.research[key];
-    if (r.level >= r.maxLevel) return toast('⭐ Already maxed!');
+    if (r.level >= r.maxLevel) return toast('Already maxed!');
     const cost = 100 * (r.level + 1);
-    if (state.gold < cost) return toast(`❌ Need ${cost} gold!`);
-    state.gold -= cost;
-    r.level++;
-    addLog(`🔬 Researched ${r.name} Level ${r.level}`);
-    toast(`✅ ${r.name} Level ${r.level}!`);
+    if (state.gold < cost) return toast(`Need ${cost} gold!`);
+    state.gold -= cost; r.level++;
+    addLog(`Researched ${r.name} Level ${r.level}`);
+    toast(`${r.name} Level ${r.level}!`);
     renderAll();
 }
 
@@ -640,50 +616,32 @@ function doResearch(key) {
 function renderEstates() {
     const el = document.getElementById('villageGrid');
     if (!el) return;
-    const estates = [
-        { name: 'Avalon Keep', type: 'Capital', level: state.buildings.keep.level, icon: '🏰', resources: `🏰 Lv.${state.buildings.keep.level}` },
-        { name: 'Northwood Village', type: 'Farming', level: state.buildings.farm.level, icon: '🌾', resources: `🌾 Lv.${state.buildings.farm.level}` },
-        { name: 'Iron Garrison', type: 'Military', level: state.buildings.barracks.level, icon: '⚔️', resources: `⚔️ Lv.${state.buildings.barracks.level}` },
-    ];
-    el.innerHTML = estates.map(e => `
+    el.innerHTML = [
+        { name: 'Avalon Keep', desc: `Keep Lv.${state.buildings.keep.level}`, icon: 'castle' },
+        { name: 'Northwood Village', desc: `Farm Lv.${state.buildings.farm.level}`, icon: 'wheat' },
+        { name: 'Iron Garrison', desc: `Barracks Lv.${state.buildings.barracks.level}`, icon: 'barracks' },
+    ].map(e => `
         <div class="village-card" onclick="switchPage('buildings')">
-            <div class="preview" style="background:linear-gradient(135deg,#1a2a3a,#2a4a3a)">${e.icon}</div>
+            <div class="preview" style="background:linear-gradient(135deg,#1a2a3a,#2a4a3a)">${ICONS[e.icon]}</div>
             <div class="info">
                 <h4>${e.name}</h4>
-                <p>${e.type}</p>
-                <div class="resources"><span>${e.resources}</span></div>
+                <div class="resources"><span>${e.desc}</span></div>
             </div>
         </div>
     `).join('');
 }
 
 // ============================================================
-// GAME TICK / ECONOMY
+// GAME TICK
 // ============================================================
 function gameTick() {
-    // Production
-    const farmProd = state.buildings.farm.level * 4 + (state.research.farming.level * 2);
-    const woodProd = state.buildings.lumber.level * 3 + (state.research.forestry.level * 2);
-    const stoneProd = state.buildings.quarry.level * 2 + (state.research.mining.level * 2);
-    const goldProd = state.buildings.market.level * 3 + (state.research.trade.level * 2) + Math.floor(state.population / 50);
-
-    state.food += farmProd;
-    state.wood += woodProd;
-    state.stone += stoneProd;
-    state.gold += goldProd;
-
-    // Honor gain
-    const honorGain = (state.buildings.church?.level || 0) * 2 + state.research.diplomacy.level;
-    state.honor += honorGain;
-
-    // Population growth
-    const popGrowth = Math.floor(state.population * 0.02) + 1 + state.buildings.keep.level;
-    state.population += popGrowth;
-
-    // Food consumption
-    const consumption = 1 + Object.values(state.military).reduce((a, b) => a + b, 0);
-    state.food = Math.max(0, state.food - consumption);
-
+    state.food += state.buildings.farm.level * 4 + state.research.farming.level * 2;
+    state.wood += state.buildings.lumber.level * 3 + state.research.forestry.level * 2;
+    state.stone += state.buildings.quarry.level * 2 + state.research.mining.level * 2;
+    state.gold += state.buildings.market.level * 3 + state.research.trade.level * 2 + Math.floor(state.population / 50);
+    state.honor += (state.buildings.church?.level || 0) * 2 + state.research.diplomacy.level;
+    state.population += Math.floor(state.population * 0.02) + 1 + state.buildings.keep.level;
+    state.food = Math.max(0, state.food - (1 + Object.values(state.military).reduce((a,b) => a+b, 0)));
     renderStats();
 }
 
@@ -693,26 +651,18 @@ function gameTick() {
 function renderStats() {
     document.getElementById('statPopulation').textContent = state.population.toLocaleString();
     document.getElementById('statGold').textContent = Math.floor(state.gold).toLocaleString();
-    const totalMil = Object.values(state.military).reduce((a, b) => a + b, 0);
+    const totalMil = Object.values(state.military).reduce((a,b) => a+b, 0);
     document.getElementById('statMilitary').textContent = totalMil;
     document.getElementById('statHonor').textContent = state.honor;
-
     document.getElementById('statPopGrowth').textContent = `+${Math.floor(state.population * 0.02) + 1 + state.buildings.keep.level} / day`;
     document.getElementById('statGoldIncome').textContent = `+${state.buildings.market.level * 3 + state.research.trade.level * 2 + Math.floor(state.population / 50)} / day`;
     document.getElementById('statArmyDetail').textContent = `${totalMil} troops`;
-    const ranks = ['Peasant', 'Squire', 'Knight', 'Baron', 'Earl', 'Duke', 'King'];
-    const rankIdx = Math.min(Math.floor(state.honor / 200), ranks.length - 1);
-    document.getElementById('statRank').textContent = ranks[rankIdx];
-    updateArmyCount();
+    const ranks = ['Peasant','Squire','Knight','Baron','Earl','Duke','King'];
+    document.getElementById('statRank').textContent = ranks[Math.min(Math.floor(state.honor/200), ranks.length-1)];
 }
 
 function renderAll() {
-    renderStats();
-    renderBuildings();
-    renderArmy();
-    renderEstates();
-    renderResearch();
-    renderMap();
+    renderStats(); renderBuildings(); renderArmy(); renderEstates(); renderResearch(); renderMap();
 }
 
 // ============================================================
@@ -741,61 +691,34 @@ function toast(msg) {
 function addLog(msg) {
     const el = document.getElementById('activityList');
     if (!el) return;
-    state.activityLog.push(msg);
-    const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    el.innerHTML = `<div class="activity-item"><span>🕐${time}</span>${msg}</div>` + el.innerHTML;
+    const time = new Date().toLocaleTimeString([], { hour:'2-digit', minute:'2-digit' });
+    el.innerHTML = `<div class="activity-item">${ICONS.news} ${time} — ${msg}</div>` + el.innerHTML;
     if (el.children.length > 20) el.removeChild(el.lastChild);
 }
 
 // ============================================================
 // MODAL
 // ============================================================
-function showModal(type, customBody, action) {
+function showModal(type, _, body, action) {
     const overlay = document.getElementById('modalOverlay');
-    const body = document.getElementById('modalBody');
-    let html = '';
-    switch(type) {
-        case 'population':
-            html = `<h2>👥 Population</h2><p>Your kingdom has <strong>${state.population.toLocaleString()}</strong> citizens.<br>Growth rate: +${Math.floor(state.population * 0.02) + 1 + state.buildings.keep.level} / day<br>Food consumption: ${1 + Object.values(state.military).reduce((a, b) => a + b, 0)} / day</p>`;
-            break;
-        case 'gold':
-            html = `<h2>💰 Treasury</h2><p>Gold: <strong>${Math.floor(state.gold).toLocaleString()}</strong><br>Income: +${state.buildings.market.level * 3 + state.research.trade.level * 2 + Math.floor(state.population / 50)} / day</p>`;
-            break;
-        case 'honor':
-            const ranks = ['Peasant', 'Squire', 'Knight', 'Baron', 'Earl', 'Duke', 'King'];
-            const rankIdx = Math.min(Math.floor(state.honor / 200), ranks.length - 1);
-            html = `<h2>👑 Honor & Rank</h2><p>Honor: <strong>${state.honor}</strong><br>Rank: <strong>${ranks[rankIdx]}</strong><br>Next rank: ${ranks[Math.min(rankIdx+1, ranks.length-1)]} at ${(rankIdx+1)*200} honor</p>`;
-            break;
-        case 'lord':
-            html = `<h2>👑 Lord_obvirm</h2><p>Title: Lord of Avalon<br>Honor: ${state.honor}<br>Territories: ${state.tiles.filter(t => t.owner === 'player').length}<br>Army: ${Object.values(state.military).reduce((a,b) => a+b, 0)} troops</p>`;
-            break;
-        case 'faction':
-            html = `<h2>🤝 The Crown Alliance</h2><p>You are a member of <strong>The Crown Alliance</strong> (Rank: Knight).<br>Members online: 12<br>Alliance power: #8 in Kingmaker 4</p>`;
-            break;
-        case 'rankings':
-            html = `<h2>📊 Leaderboards</h2><p>Your Rank: <strong>#342</strong> of 12,847 players<br>Top 3% overall<br>Military Power: #521<br>Economy: #289</p>`;
-            break;
-        case 'tournament':
-            html = `<h2>🏆 Kingmaker 4 Tournament</h2><p>Status: <strong>Active</strong> (ends in 14 days)<br>Your score: 12,847 pts<br>Rank: #342<br>Rewards: Top 500 get exclusive "Dragon Knight" skin</p>`;
-            break;
-        case 'news':
-            html = `<h2>📰 Kingdom News</h2><p>📢 Kingmaker 4 is now live! Battle for supremacy!<br>📢 Easter Treasury Sale — 50% off building upgrades<br>📢 New server: Avalon (EU-West) now open</p>`;
-            break;
-        case 'territory':
-            html = `<h2>🏰 Territory</h2><p>${customBody.replace(/\n/g, '<br>')}</p>`;
-            break;
-        case 'battle':
-            html = `<h2>⚔️ Enemy Territory</h2><p>${customBody.replace(/\n/g, '<br>')}</p>`;
-            if (action) html += `<button class="btn btn-danger" onclick="document.getElementById('modalOverlay').classList.remove('show'); (${action.toString()})()">⚔️ Attack!</button>`;
-            break;
-        case 'claim':
-            html = `<h2>⬛ Unexplored Land</h2><p>${customBody.replace(/\n/g, '<br>')}</p>`;
-            if (action) html += `<button class="btn btn-primary" onclick="document.getElementById('modalOverlay').classList.remove('show'); (${action.toString()})()">🏴 Claim (💰100)</button>`;
-            break;
-        default:
-            html = `<h2>ℹ️</h2><p>${customBody || 'Information'}</p>`;
+    const b = document.getElementById('modalBody');
+    let html = body || '';
+    if (!body) {
+        switch(type) {
+            case 'population': html = `<h2>${ICONS.people} Population</h2><p>Citizens: ${state.population.toLocaleString()}<br>Growth: +${Math.floor(state.population*0.02)+1+state.buildings.keep.level}/day<br>Food consumption: ${1+Object.values(state.military).reduce((a,b)=>a+b,0)}/day</p>`; break;
+            case 'gold': html = `<h2>${ICONS.gold} Treasury</h2><p>Gold: ${Math.floor(state.gold).toLocaleString()}<br>Income: +${state.buildings.market.level*3+state.research.trade.level*2+Math.floor(state.population/50)}/day</p>`; break;
+            case 'honor': const r = ['Peasant','Squire','Knight','Baron','Earl','Duke','King']; const ri = Math.min(Math.floor(state.honor/200), r.length-1); html = `<h2>${ICONS.crown} Honor</h2><p>Honor: ${state.honor}<br>Rank: ${r[ri]}<br>Next: ${r[Math.min(ri+1,r.length-1)]} at ${(ri+1)*200}</p>`; break;
+            case 'lord': html = `<h2>${ICONS.crown} Lord_obvirm</h2><p>Honor: ${state.honor}<br>Territories: ${state.tiles.filter(t=>t.owner==='player').length}<br>Army: ${Object.values(state.military).reduce((a,b)=>a+b,0)} troops</p>`; break;
+            case 'faction': html = `<h2>${ICONS.handshake} The Crown Alliance</h2><p>Rank: Knight<br>Members online: 12<br>Power ranking: #8</p>`; break;
+            case 'rankings': html = `<h2>${ICONS.trophy} Leaderboards</h2><p>Your rank: #342 of 12,847<br>Top 3%</p>`; break;
+            case 'tournament': html = `<h2>${ICONS.trophy} Kingmaker 4</h2><p>Active (14 days left)<br>Score: 12,847 pts</p>`; break;
+            case 'news': html = `<h2>${ICONS.news} News</h2><p>Kingmaker 4 is live!<br>Easter Sale — 50% off upgrades<br>New server: Avalon (EU)</p>`; break;
+            case 'info': html = body; break;
+            case 'battle': html = (body || '') + (action ? `<button class="btn btn-danger" onclick="overlay.classList.remove('show'); (${action.toString()})()">${ICONS.sword} Attack!</button>` : ''); break;
+            case 'confirm': html = (body || '') + (action ? `<button class="btn btn-primary" onclick="overlay.classList.remove('show'); (${action.toString()})()">${ICONS.check} Confirm</button>` : ''); break;
+        }
     }
-    body.innerHTML = html;
+    b.innerHTML = html;
     overlay.classList.add('show');
 }
 
@@ -804,9 +727,6 @@ function closeModal(e) {
     document.getElementById('modalOverlay').classList.remove('show');
 }
 
-// ============================================================
-// START
-// ============================================================
 document.addEventListener('DOMContentLoaded', init);
 </script>
 </body>
